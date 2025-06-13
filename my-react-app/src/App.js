@@ -38,7 +38,9 @@ function App() {
 
   return (
     <div className="app">
-      <h1>Мои растения</h1>
+      <header className="app-header">
+        <h1>🌿 Мой цветочный дневник</h1>
+      </header>
       <FlowerForm 
         onSubmit={addFlower} 
         initialData={editingFlower} 
