@@ -11,6 +11,7 @@
   display: flex;
   flex-direction: column;
   transition: transform 0.2s, box-shadow 0.2s;
+  position: relative;
 }
 
 .flower-card:hover {
@@ -18,70 +19,111 @@
   box-shadow: 0 4px 12px rgba(0,0,0,0.1);
 }
 
-
 .flower-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 8px;
-  padding-bottom: 6px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
   border-bottom: 1px solid var(--olivine-light);
 }
 
 .flower-card-title {
   margin: 0;
   color: var(--chamoisee);
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
 .flower-card-actions {
   display: flex;
-  gap: 5px;
+  gap: 8px;
 }
 
 .flower-card-button {
   background: none;
   border: none;
-  color: var(--chamoisee);
   cursor: pointer;
-  padding: 4px;
-  border-radius: 4px;
-  transition: all 0.2s;
+  padding: 6px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
   display: flex;
   align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  position: relative;
 }
 
-.flower-card-button:hover {
-  background-color: var(--olivine-light);
+.edit-button {
+  color: var(--olivine);
+}
+
+.delete-button {
+  color: var(--chamoisee);
+}
+
+.edit-button:hover {
+  background-color: var(--olivine);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px rgba(173, 193, 120, 0.3);
+}
+
+.delete-button:hover {
+  background-color: var(--chamoisee);
+  color: white;
+  transform: scale(1.1);
+  box-shadow: 0 0 0 2px rgba(169, 132, 103, 0.3);
+}
+
+.flower-card-button::after {
+  content: attr(aria-label);
+  position: absolute;
+  bottom: -30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--umber);
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  opacity: 0;
+  transition: opacity 0.2s;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.flower-card-button:hover::after {
+  opacity: 1;
 }
 
 .flower-properties {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 8px;
+  margin-bottom: 12px;
 }
 
 .flower-property {
   display: flex;
   align-items: center;
+  gap: 8px;
+  font-size: 0.9rem;
 }
 
 .property-icon {
   color: var(--chamoisee);
-  margin-right: 8px;
-  min-width: 16px;
-  font-size: 0.8rem;
+  flex-shrink: 0;
 }
 
 .flower-comment {
-  margin-top: 8px;
-  padding-top: 8px;
+  margin-top: auto;
+  padding-top: 10px;
   border-top: 1px dashed var(--olivine-light);
-  font-size: 0.85rem;
   display: flex;
-  align-items: flex-start;
   gap: 8px;
+  font-size: 0.85rem;
 }
 
 .comment-icon {

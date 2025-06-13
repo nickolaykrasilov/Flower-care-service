@@ -4,26 +4,34 @@ import '../styles/FlowerCard.css';
 const FlowerCard = ({ flower, onDelete, onEdit }) => {
   return (
     <div className="flower-card">
+      {/* Заголовок карточки с кнопками */}
       <div className="flower-card-header">
         <h3 className="flower-card-title">{flower.name}</h3>
         <div className="flower-card-actions">
           <button 
-            onClick={() => onEdit(flower)} 
+            onClick={(e) => {
+              e.stopPropagation();
+              onEdit(flower);
+            }}
             className="flower-card-button edit-button"
             aria-label="Редактировать"
           >
-            <FaEdit />
+            <FaEdit size={14} />
           </button>
           <button 
-            onClick={() => onDelete(flower.id)} 
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(flower.id);
+            }}
             className="flower-card-button delete-button"
             aria-label="Удалить"
           >
-            <FaTrash />
+            <FaTrash size={14} />
           </button>
         </div>
       </div>
 
+      {/* Свойства растения */}
       <div className="flower-properties">
         <div className="flower-property">
           <FaTint className="property-icon" />
@@ -39,6 +47,7 @@ const FlowerCard = ({ flower, onDelete, onEdit }) => {
         </div>
       </div>
 
+      {/* Блок с комментарием */}
       {flower.comment && (
         <div className="flower-comment">
           <FaComment className="comment-icon" />
