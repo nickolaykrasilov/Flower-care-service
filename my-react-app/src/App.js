@@ -1,24 +1,49 @@
+import { useState } from 'react';
+import FlowerCard from './components/FlowerCard';
+import FlowerForm from './components/FlowerForm';
 import './App.css';
 
 function App() {
+  const [flowers, setFlowers] = useState([
+    {
+      id: 1,
+      name: "Монстера",
+      watering: "Умеренный",
+      light: "Рассеянный",
+      temperature: "18-25°C",
+      comment: "Опрыскивать листья 2 раза в неделю"
+    },
+    {
+      id: 2,
+      name: "Кактус",
+      watering: "Редкий",
+      light: "Прямой",
+      temperature: "20-30°C",
+      comment: "Поливать раз в 3 недели"
+    }
+  ]);
+
+  const addFlower = (newFlower) => {
+    setFlowers([...flowers, { ...newFlower, id: Date.now() }]);
+  };
+
+  const deleteFlower = (id) => {
+    setFlowers(flowers.filter(flower => flower.id !== id));
+  };
+
   return (
-    <div className="App">
-      <header className="header" style={{ backgroundColor: 'var(--chamoisee)' }}>
-        <h1>Мое приложение</h1>
-      </header>
-      <main className="main-content">
-        <section className="card" style={{ backgroundColor: 'var(--tea-green)' }}>
-          <h2>Карточка 1</h2>
-          <p>Контент карточки</p>
-        </section>
-        <section className="card" style={{ backgroundColor: 'var(--olivine)' }}>
-          <h2>Карточка 2</h2>
-          <p>Контент карточки</p>
-        </section>
-      </main>
-      <footer className="footer" style={{ backgroundColor: 'var(--umber)', color: 'var(--parchment)' }}>
-        <p>© 2025 Мое приложение</p>
-      </footer>
+    <div className="app">
+      <h1>Мой садовый дневник</h1>
+      <FlowerForm onSubmit={addFlower} />
+      <div className="flower-list">
+        {flowers.map(flower => (
+          <FlowerCard 
+            key={flower.id} 
+            flower={flower} 
+            onDelete={deleteFlower}
+          />
+        ))}
+      </div>
     </div>
   );
 }
