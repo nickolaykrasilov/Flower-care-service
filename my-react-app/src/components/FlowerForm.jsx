@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const FlowerForm = ({ onSubmit }) => {
+const FlowerForm = ({ onSubmit, initialData }) => {
   const [formData, setFormData] = useState({
     name: '',
     watering: 'Умеренный',
@@ -9,6 +9,12 @@ const FlowerForm = ({ onSubmit }) => {
     comment: ''
   });
 
+  useEffect(() => {
+    if (initialData) {
+      setFormData(initialData);
+    }
+  }, [initialData]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({ ...prev, [name]: value }));
@@ -16,21 +22,21 @@ const FlowerForm = ({ onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!formData.name.trim()) return;
-    
     onSubmit(formData);
-    setFormData({
-      name: '',
-      watering: 'Умеренный',
-      light: 'Рассеянный',
-      temperature: '18-25°C',
-      comment: ''
-    });
+    if (!initialData) {
+      setFormData({
+        name: '',
+        watering: 'Умеренный',
+        light: 'Рассеянный',
+        temperature: '18-25°C',
+        comment: ''
+      });
+    }
   };
 
   return (
     <form onSubmit={handleSubmit} className="flower-form">
-      <h2>Добавить новое растение</h2>
+      <h2>{initialData ? 'Редактировать растение' : 'Добавить новое растение'}</h2>
       
       <input
         type="text"
@@ -41,48 +47,55 @@ const FlowerForm = ({ onSubmit }) => {
         required
       />
       
-      <label>
-        Интенсивность полива:
-        <select 
-          name="watering" 
-          value={formData.watering} 
-          onChange={handleChange}
-        >
-          <option value="Редкий">Редкий</option>
-          <option value="Умеренный">Умеренный</option>
-          <option value="Обильный">Обильный</option>
-        </select>
-      </label>
+      <select name="watering" value={formData.watering} onChange={handleChange}>
+        <option value="Редкий">Редкий</option>
+        <option value="Умеренный">Умеренный</option>
+        <option value="Обильный">Обильный</option>
+      </select>
       
-      <label>
-        Уровень освещения:
-        <select 
-          name="light" 
-          value={formData.light} 
-          onChange={handleChange}
-        >
-          <option value="Тень">Тень</option>
-          <option value="Рассеянный">Рассеянный</option>
-          <option value="Прямой">Прямой</option>
-        </select>
-      </label>
+      <select name="light" value={formData.light} onChange={handleChange}>
+        <option value="Тень">Тень</option>
+        <option value="Рассеянный">Рассеянный</option>
+        <option value="Прямой">Прямой</option>
+      </select>
       
       <input
         type="text"
         name="temperature"
         value={formData.temperature}
         onChange={handleChange}
-        placeholder="Температурный режим (например, 18-25°C)"
+        placeholder="Температурный режим"
       />
       
       <textarea
         name="comment"
         value={formData.comment}
         onChange={handleChange}
-        placeholder="Дополнительные заметки по уходу..."
+        placeholder="Дополнительные заметки"
       />
       
-      <button type="submit">Добавить растение</button>
+      <button type="submit">
+        {initialData ? 'Обновить' : 'Добавить'}
+      </button>
+      
+      {initialData && (
+        <button 
+          type="button"
+          className="cancel-btn"
+          onClick={() => {
+            setFormData({
+              name: '',
+              watering: 'Умеренный',
+              light: 'Рассеянный',
+              temperature: '18-25°C',
+              comment: ''
+            });
+            onSubmit(null);
+          }}
+        >
+          Отмена
+        </button>
+      )}
     </form>
   );
 };

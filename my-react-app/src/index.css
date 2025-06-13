@@ -12,6 +12,7 @@ body {
   background-color: var(--parchment);
   color: var(--umber);
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;

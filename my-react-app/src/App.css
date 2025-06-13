@@ -1,96 +1,108 @@
-.app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 20px;
-  font-family: 'Arial', sans-serif;
+/* Цветовая палитра */
+:root {
+  --parchment: #f0ead2;
+  --tea-green: #dde5b6;
+  --olivine: #adc178;
+  --chamoisee: #a98467;
+  --umber: #6c584c;
 }
 
-h1 {
-  color: #2e7d32;
-  text-align: center;
-  margin-bottom: 30px;
+/* Кнопки действий */
+.card-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 15px;
 }
 
-.flower-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 25px;
-  margin-top: 40px;
+.edit-btn {
+  background-color: var(--olivine);
+  color: var(--umber);
+}
+
+.delete-btn {
+  background-color: var(--chamoisee);
+  color: var(--parchment);
+}
+
+.cancel-btn {
+  background-color: #f0f0f0;
+  color: var(--umber);
+  margin-left: 10px;
+}
+
+/* Состояния кнопок */
+button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* Форма в режиме редактирования */
+.flower-form.editing {
+  border: 2px solid var(--olivine);
 }
 
 .flower-card {
-  border: 1px solid #e0e0e0;
   border-radius: 10px;
-  padding: 20px;
-  background-color: #f8f9fa;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-  transition: transform 0.3s ease;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .flower-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
-.flower-card h3 {
-  color: #1b5e20;
-  margin-top: 0;
+.flower-property {
+  display: flex;
+  align-items: center;
+  margin: 0.8rem 0;
 }
 
-.flower-card p {
-  margin: 8px 0;
-  color: #333;
+.property-icon {
+  margin-right: 0.8rem;
+  color: var(--chamoisee);
+  min-width: 20px;
 }
 
-.flower-card button {
-  background-color: #d32f2f;
-  color: white;
+.property-label {
+  font-weight: 600;
+  margin-right: 0.5rem;
+  color: var(--umber);
+}
+
+.property-value {
+  color: var(--umber);
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.8rem;
+  margin-top: 1.5rem;
+}
+
+.card-actions button {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1rem;
   border: none;
-  padding: 8px 15px;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
-  margin-top: 10px;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
-.flower-card button:hover {
-  background-color: #b71c1c;
+.card-actions button:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
 }
 
-.flower-form {
-  background-color: #e8f5e9;
-  padding: 25px;
-  border-radius: 10px;
-  max-width: 500px;
-  margin: 0 auto;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.flower-form input,
-.flower-form select,
-.flower-form textarea {
-  width: 100%;
-  padding: 10px;
-  margin-bottom: 15px;
-  border: 1px solid #c8e6c9;
-  border-radius: 5px;
-  font-size: 16px;
-}
-
-.flower-form textarea {
-  min-height: 80px;
-  resize: vertical;
-}
-
-.flower-form button {
-  background-color: #388e3c;
-  color: white;
-  border: none;
-  padding: 12px 20px;
-  border-radius: 5px;
-  cursor: pointer;
-  font-size: 16px;
-  width: 100%;
-}
-
-.flower-form button:hover {
-  background-color: #2e7d32;
+.card-actions button:active {
+  transform: translateY(0);
 }

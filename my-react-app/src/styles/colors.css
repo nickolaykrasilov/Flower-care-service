@@ -6,7 +6,7 @@
   --chamoisee: #a98467;
   --umber: #6c584c;
   
-  /* Альфа-канал (прозрачность) можно добавлять через opacity или отдельные переменные */
-  --parchment-transparent: #f0ead280;
-  --tea-green-transparent: #dde5b680;
+  /* Дополнительные оттенки */
+  --olivine-light: #c0d28a;
+  --chamoisee-light: #b5947d;
 }
