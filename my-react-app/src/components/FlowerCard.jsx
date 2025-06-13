@@ -4,7 +4,6 @@ import '../styles/FlowerCard.css';
 const FlowerCard = ({ flower, onDelete, onEdit }) => {
   return (
     <div className="flower-card">
-      {/* Шапка карточки */}
       <div className="flower-card-header">
         <h3 className="flower-card-title">{flower.name}</h3>
         <div className="flower-card-actions">
@@ -25,23 +24,21 @@ const FlowerCard = ({ flower, onDelete, onEdit }) => {
         </div>
       </div>
 
-      {/* Свойства растения */}
       <div className="flower-properties">
         <div className="flower-property">
           <FaTint className="property-icon" />
-          <span>Полив: {flower.watering}</span>
+          <span><strong>Полив:</strong> {flower.watering}</span>
         </div>
         <div className="flower-property">
           <FaSun className="property-icon" />
-          <span>Освещение: {flower.light}</span>
+          <span><strong>Освещение:</strong> {flower.light}</span>
         </div>
         <div className="flower-property">
           <FaThermometerHalf className="property-icon" />
-          <span>Температура: {flower.temperature}</span>
+          <span><strong>Температура:</strong> {flower.temperature}</span>
         </div>
       </div>
 
-      {/* Комментарий */}
       {flower.comment && (
         <div className="flower-comment">
           <FaComment className="comment-icon" />

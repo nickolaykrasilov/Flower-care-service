@@ -121,3 +121,22 @@ button:active {
   justify-content: center;
   gap: 10px;
 }
+
+.flower-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 0 20px;
+}
+
+@media (min-width: 768px) {
+  .flower-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1200px) {
+  .flower-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

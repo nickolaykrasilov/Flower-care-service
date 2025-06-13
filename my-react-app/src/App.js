@@ -41,10 +41,9 @@ function App() {
       <header className="app-header">
         <h1>🌿 Мой цветочный дневник</h1>
       </header>
-      <FlowerForm 
-        onSubmit={addFlower} 
-        initialData={editingFlower} 
-      />
+      
+      <FlowerForm onSubmit={addFlower} initialData={editingFlower} />
+      
       <div className="flower-list">
         {flowers.map(flower => (
           <FlowerCard 
