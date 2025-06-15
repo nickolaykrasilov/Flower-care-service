@@ -9,7 +9,6 @@ const api = axios.create({
   }
 });
 
-// Добавляем интерсептор для токена
 api.interceptors.request.use(config => {
   const token = localStorage.getItem('access_token');
   if (token) {
@@ -17,6 +16,16 @@ api.interceptors.request.use(config => {
   }
   return config;
 });
+
+api.interceptors.response.use(
+  response => response,
+  error => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem('access_token');
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const authService = {
   async register(userData) {
@@ -29,12 +38,12 @@ export const authService = {
   },
 
   async login(username, password) {
-    const formData = new URLSearchParams();
-    formData.append('username', username);
-    formData.append('password', password);
+    const params = new URLSearchParams();
+    params.append('username', username);
+    params.append('password', password);
 
     try {
-      const response = await api.post('/api/v1/auth/token', formData, {
+      const response = await api.post('/api/v1/auth/token', params, {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
@@ -62,7 +71,14 @@ export const flowerService = {
 
   async createFlower(flowerData) {
     try {
-      const response = await api.post('/api/v1/flowers/', flowerData);
+      // Нормализация temperature_range
+      const dataToSend = {
+        ...flowerData,
+        temperature_range: flowerData.temperature_range?.min !== undefined ? 
+                          flowerData.temperature_range : 
+                          null
+      };
+      const response = await api.post('/api/v1/flowers/', dataToSend);
       return response.data;
     } catch (error) {
       throw error;
@@ -71,7 +87,13 @@ export const flowerService = {
 
   async updateFlower(id, flowerData) {
     try {
-      const response = await api.put(`/api/v1/flowers/${id}`, flowerData);
+      const dataToSend = {
+        ...flowerData,
+        temperature_range: flowerData.temperature_range?.min !== undefined ? 
+                          flowerData.temperature_range : 
+                          null
+      };
+      const response = await api.put(`/api/v1/flowers/${id}`, dataToSend);
       return response.data;
     } catch (error) {
       throw error;

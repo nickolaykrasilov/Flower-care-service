@@ -2,66 +2,53 @@ import { FaEdit, FaTrash, FaTint, FaSun, FaThermometerHalf, FaComment } from 're
 import '../styles/FlowerCard.css';
 
 const FlowerCard = ({ flower, onDelete, onEdit }) => {
-  // Функция для форматирования температурного диапазона
   const formatTemperature = (tempRange) => {
-    if (!tempRange) return 'Не указано';
-    const { min, max } = tempRange;
-    if (min !== null && max !== null) return `${min}°C - ${max}°C`;
-    if (min !== null) return `от ${min}°C`;
-    if (max !== null) return `до ${max}°C`;
-    return 'Не указано';
+    if (!tempRange || (tempRange.min === null && tempRange.max === null)) {
+      return 'Не указано';
+    }
+    
+    const parts = [];
+    if (tempRange.min !== null) parts.push(`от ${tempRange.min}°C`);
+    if (tempRange.max !== null) parts.push(`до ${tempRange.max}°C`);
+    
+    return parts.join(' ') || 'Не указано';
   };
+
+  if (!flower) return null;
 
   return (
     <div className="flower-card">
-      {/* Заголовок карточки с кнопками */}
       <div className="flower-card-header">
-        <h3 className="flower-card-title">{flower.name}</h3>
-        <div className="flower-card-actions">
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onEdit(flower);
-            }}
-            className="flower-card-button edit-button"
-            aria-label="Редактировать"
-          >
-            <FaEdit size={14} />
+        <h3>{flower.name || 'Без названия'}</h3>
+        <div className="flower-actions">
+          <button onClick={() => onEdit(flower)} aria-label="Редактировать">
+            <FaEdit />
           </button>
-          <button 
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete(flower.id);
-            }}
-            className="flower-card-button delete-button"
-            aria-label="Удалить"
-          >
-            <FaTrash size={14} />
+          <button onClick={() => onDelete(flower.id)} aria-label="Удалить">
+            <FaTrash />
           </button>
         </div>
       </div>
 
-      {/* Свойства растения */}
-      <div className="flower-properties">
+      <div className="flower-details">
         <div className="flower-property">
-          <FaTint className="property-icon" />
+          <FaTint className="icon" />
           <span><strong>Полив:</strong> {flower.watering_intensity || 'Не указано'}</span>
         </div>
         <div className="flower-property">
-          <FaSun className="property-icon" />
+          <FaSun className="icon" />
           <span><strong>Освещение:</strong> {flower.light_level || 'Не указано'}</span>
         </div>
         <div className="flower-property">
-          <FaThermometerHalf className="property-icon" />
+          <FaThermometerHalf className="icon" />
           <span><strong>Температура:</strong> {formatTemperature(flower.temperature_range)}</span>
         </div>
       </div>
 
-      {/* Блок с комментарием */}
       {flower.comment && (
         <div className="flower-comment">
-          <FaComment className="comment-icon" />
-          <span>{flower.comment}</span>
+          <FaComment className="icon" />
+          <p>{flower.comment}</p>
         </div>
       )}
     </div>

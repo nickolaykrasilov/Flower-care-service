@@ -13,28 +13,12 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
 
-  // Проверка валидности токена
-  const checkTokenValidity = useCallback(async () => {
-    try {
-      const token = localStorage.getItem('access_token');
-      if (!token) return false;
-      
-      // Простая проверка наличия токена (можно заменить на реальный запрос к /verify)
-      return true;
-    } catch (err) {
-      return false;
-    }
-  }, []);
-
-  // Обработчик ошибок API
   const handleApiError = useCallback((error) => {
     console.error('API Error:', error);
-    const errorMessage = error.response?.data?.detail || error.message || 'Произошла ошибка';
-    setError(errorMessage);
+    setError(error.response?.data?.detail || error.message || 'Ошибка сервера');
     return error;
   }, []);
 
-  // Загрузка списка цветов
   const loadFlowers = useCallback(async () => {
     setLoading(true);
     try {
@@ -42,27 +26,45 @@ function App() {
       setFlowers(data);
       setError(null);
     } catch (err) {
-      const error = handleApiError(err);
-      if (error.response?.status === 401) {
+      if (err.response?.status === 401) {
         setIsAuthenticated(false);
       }
+      handleApiError(err);
     } finally {
       setLoading(false);
     }
   }, [handleApiError]);
 
-  // Обработчик входа/регистрации
+  const checkAuth = useCallback(async () => {
+    const token = localStorage.getItem('access_token');
+    return !!token;
+  }, []);
+
+  useEffect(() => {
+    const initApp = async () => {
+      try {
+        const isAuth = await checkAuth();
+        setIsAuthenticated(isAuth);
+        if (isAuth) await loadFlowers();
+      } catch (err) {
+        handleApiError(err);
+      } finally {
+        setAuthChecked(true);
+      }
+    };
+    initApp();
+  }, [checkAuth, loadFlowers, handleApiError]);
+
   const handleAuth = useCallback(async (authData, isLogin) => {
     setLoading(true);
     try {
       if (isLogin) {
-        const response = await authService.login(authData.username, authData.password);
-        localStorage.setItem('access_token', response.access_token);
+        const { access_token } = await authService.login(authData.username, authData.password);
+        localStorage.setItem('access_token', access_token);
       } else {
         await authService.register(authData);
-        // Автоматический вход после регистрации
-        const response = await authService.login(authData.username, authData.password);
-        localStorage.setItem('access_token', response.access_token);
+        const { access_token } = await authService.login(authData.username, authData.password);
+        localStorage.setItem('access_token', access_token);
       }
       setIsAuthenticated(true);
       await loadFlowers();
@@ -73,33 +75,12 @@ function App() {
     }
   }, [loadFlowers, handleApiError]);
 
-  // Выход из системы
   const handleLogout = useCallback(() => {
     authService.logout();
     setIsAuthenticated(false);
     setFlowers([]);
   }, []);
 
-  // Проверка авторизации при загрузке
-  useEffect(() => {
-    const verifyAuth = async () => {
-      try {
-        const isValid = await checkTokenValidity();
-        setIsAuthenticated(isValid);
-        if (isValid) {
-          await loadFlowers();
-        }
-      } catch (err) {
-        handleApiError(err);
-      } finally {
-        setAuthChecked(true);
-      }
-    };
-
-    verifyAuth();
-  }, [checkTokenValidity, loadFlowers, handleApiError]);
-
-  // Обработчики для работы с цветами
   const handleSubmit = useCallback(async (flowerData) => {
     setLoading(true);
     try {
@@ -121,7 +102,7 @@ function App() {
     setLoading(true);
     try {
       await flowerService.deleteFlower(id);
-      setFlowers(prev => prev.filter(flower => flower.id !== id));
+      setFlowers(prev => prev.filter(f => f.id !== id));
     } catch (err) {
       handleApiError(err);
     } finally {
@@ -129,29 +110,27 @@ function App() {
     }
   }, [handleApiError]);
 
-  if (!authChecked) {
-    return <div className="loading-screen">Проверка авторизации...</div>;
-  }
+  if (!authChecked) return <div className="loading">Проверка авторизации...</div>;
 
   return (
     <div className="app">
-      <header className="app-header">
+      <header>
         <h1>🌿 Мой цветочный дневник</h1>
         {isAuthenticated && (
-          <button onClick={handleLogout} className="logout-btn">
+          <button onClick={handleLogout} disabled={loading}>
             Выйти
           </button>
         )}
       </header>
 
       {error && (
-        <div className="error-message">
+        <div className="error">
           {error}
           <button onClick={() => setError(null)}>×</button>
         </div>
       )}
 
-      {loading && <div className="loading-overlay">Загрузка...</div>}
+      {loading && <div className="loading">Загрузка...</div>}
 
       {!isAuthenticated ? (
         <AuthForm onSubmit={handleAuth} loading={loading} />
@@ -160,6 +139,7 @@ function App() {
           <FlowerForm 
             onSubmit={handleSubmit} 
             initialData={editingFlower} 
+            loading={loading}
           />
           <div className="flower-list">
             {flowers.length > 0 ? (
@@ -168,11 +148,11 @@ function App() {
                   key={flower.id}
                   flower={flower}
                   onDelete={handleDelete}
-                  onEdit={() => setEditingFlower(flower)}
+                  onEdit={setEditingFlower}
                 />
               ))
             ) : (
-              <div className="empty-list">Нет добавленных растений</div>
+              <div className="empty">Нет добавленных растений</div>
             )}
           </div>
         </>
