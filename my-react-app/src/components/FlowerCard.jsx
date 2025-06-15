@@ -2,6 +2,16 @@ import { FaEdit, FaTrash, FaTint, FaSun, FaThermometerHalf, FaComment } from 're
 import '../styles/FlowerCard.css';
 
 const FlowerCard = ({ flower, onDelete, onEdit }) => {
+  // Функция для форматирования температурного диапазона
+  const formatTemperature = (tempRange) => {
+    if (!tempRange) return 'Не указано';
+    const { min, max } = tempRange;
+    if (min !== null && max !== null) return `${min}°C - ${max}°C`;
+    if (min !== null) return `от ${min}°C`;
+    if (max !== null) return `до ${max}°C`;
+    return 'Не указано';
+  };
+
   return (
     <div className="flower-card">
       {/* Заголовок карточки с кнопками */}
@@ -35,15 +45,15 @@ const FlowerCard = ({ flower, onDelete, onEdit }) => {
       <div className="flower-properties">
         <div className="flower-property">
           <FaTint className="property-icon" />
-          <span><strong>Полив:</strong> {flower.watering}</span>
+          <span><strong>Полив:</strong> {flower.watering_intensity || 'Не указано'}</span>
         </div>
         <div className="flower-property">
           <FaSun className="property-icon" />
-          <span><strong>Освещение:</strong> {flower.light}</span>
+          <span><strong>Освещение:</strong> {flower.light_level || 'Не указано'}</span>
         </div>
         <div className="flower-property">
           <FaThermometerHalf className="property-icon" />
-          <span><strong>Температура:</strong> {flower.temperature}</span>
+          <span><strong>Температура:</strong> {formatTemperature(flower.temperature_range)}</span>
         </div>
       </div>
 

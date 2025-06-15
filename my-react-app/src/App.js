@@ -13,44 +13,56 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
 
-  // Обработчик ошибок API
-  const handleApiError = useCallback((error) => {
-    if (error.response?.status === 401) {
-      setError('Сессия истекла. Пожалуйста, войдите снова.');
-      authService.logout();
-      setIsAuthenticated(false);
-    } else {
-      setError(
-        error.response?.data?.detail || 
-        error.message || 
-        'Произошла ошибка'
-      );
+  // Проверка валидности токена
+  const checkTokenValidity = useCallback(async () => {
+    try {
+      const token = localStorage.getItem('access_token');
+      if (!token) return false;
+      
+      // Простая проверка наличия токена (можно заменить на реальный запрос к /verify)
+      return true;
+    } catch (err) {
+      return false;
     }
   }, []);
 
-  // Мемоизированная функция загрузки цветов
+  // Обработчик ошибок API
+  const handleApiError = useCallback((error) => {
+    console.error('API Error:', error);
+    const errorMessage = error.response?.data?.detail || error.message || 'Произошла ошибка';
+    setError(errorMessage);
+    return error;
+  }, []);
+
+  // Загрузка списка цветов
   const loadFlowers = useCallback(async () => {
     setLoading(true);
-    setError(null);
     try {
       const data = await flowerService.getFlowers();
       setFlowers(data);
+      setError(null);
     } catch (err) {
-      handleApiError(err);
+      const error = handleApiError(err);
+      if (error.response?.status === 401) {
+        setIsAuthenticated(false);
+      }
     } finally {
       setLoading(false);
     }
-  }, [handleApiError]); // Добавляем handleApiError в зависимости
+  }, [handleApiError]);
 
-  // Обработчик аутентификации
+  // Обработчик входа/регистрации
   const handleAuth = useCallback(async (authData, isLogin) => {
     setLoading(true);
-    setError(null);
     try {
       if (isLogin) {
-        await authService.login(authData.username, authData.password);
+        const response = await authService.login(authData.username, authData.password);
+        localStorage.setItem('access_token', response.access_token);
       } else {
         await authService.register(authData);
+        // Автоматический вход после регистрации
+        const response = await authService.login(authData.username, authData.password);
+        localStorage.setItem('access_token', response.access_token);
       }
       setIsAuthenticated(true);
       await loadFlowers();
@@ -59,7 +71,7 @@ function App() {
     } finally {
       setLoading(false);
     }
-  }, [loadFlowers, handleApiError]); // Зависимости
+  }, [loadFlowers, handleApiError]);
 
   // Выход из системы
   const handleLogout = useCallback(() => {
@@ -68,10 +80,28 @@ function App() {
     setFlowers([]);
   }, []);
 
-  // Обработчик отправки формы цветка
+  // Проверка авторизации при загрузке
+  useEffect(() => {
+    const verifyAuth = async () => {
+      try {
+        const isValid = await checkTokenValidity();
+        setIsAuthenticated(isValid);
+        if (isValid) {
+          await loadFlowers();
+        }
+      } catch (err) {
+        handleApiError(err);
+      } finally {
+        setAuthChecked(true);
+      }
+    };
+
+    verifyAuth();
+  }, [checkTokenValidity, loadFlowers, handleApiError]);
+
+  // Обработчики для работы с цветами
   const handleSubmit = useCallback(async (flowerData) => {
     setLoading(true);
-    setError(null);
     try {
       if (editingFlower) {
         await flowerService.updateFlower(editingFlower.id, flowerData);
@@ -85,12 +115,10 @@ function App() {
     } finally {
       setLoading(false);
     }
-  }, [editingFlower, loadFlowers, handleApiError]); // Зависимости
+  }, [editingFlower, loadFlowers, handleApiError]);
 
-  // Обработчик удаления цветка
   const handleDelete = useCallback(async (id) => {
     setLoading(true);
-    setError(null);
     try {
       await flowerService.deleteFlower(id);
       setFlowers(prev => prev.filter(flower => flower.id !== id));
@@ -99,42 +127,18 @@ function App() {
     } finally {
       setLoading(false);
     }
-  }, [handleApiError]); // Зависимости
-
-  // Проверка аутентификации при загрузке
-  useEffect(() => {
-    const checkAuth = async () => {
-      try {
-        const token = localStorage.getItem('access_token');
-        const isAuth = !!token;
-        setIsAuthenticated(isAuth);
-        if (isAuth) await loadFlowers();
-      } catch (err) {
-        handleApiError(err);
-      } finally {
-        setAuthChecked(true);
-      }
-    };
-    
-    checkAuth();
-  }, [loadFlowers, handleApiError]); // Зависимости
+  }, [handleApiError]);
 
   if (!authChecked) {
     return <div className="loading-screen">Проверка авторизации...</div>;
   }
-
-  if (loading) return <div className="loading-screen">Загрузка...</div>;
 
   return (
     <div className="app">
       <header className="app-header">
         <h1>🌿 Мой цветочный дневник</h1>
         {isAuthenticated && (
-          <button 
-            onClick={handleLogout}
-            className="logout-btn"
-            disabled={loading}
-          >
+          <button onClick={handleLogout} className="logout-btn">
             Выйти
           </button>
         )}
@@ -147,25 +151,22 @@ function App() {
         </div>
       )}
 
+      {loading && <div className="loading-overlay">Загрузка...</div>}
+
       {!isAuthenticated ? (
-        <AuthForm 
-          onSubmit={handleAuth} 
-          loading={loading} 
-        />
+        <AuthForm onSubmit={handleAuth} loading={loading} />
       ) : (
         <>
           <FlowerForm 
             onSubmit={handleSubmit} 
             initialData={editingFlower} 
-            loading={loading}
           />
-          
           <div className="flower-list">
             {flowers.length > 0 ? (
               flowers.map(flower => (
-                <FlowerCard 
-                  key={flower.id} 
-                  flower={flower} 
+                <FlowerCard
+                  key={flower.id}
+                  flower={flower}
                   onDelete={handleDelete}
                   onEdit={() => setEditingFlower(flower)}
                 />
