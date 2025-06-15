@@ -9,23 +9,28 @@ const api = axios.create({
   }
 });
 
+// Интерсептор для логирования запросов
 api.interceptors.request.use(config => {
+  console.log(`[Request] ${config.method?.toUpperCase()} ${config.url}`);
+  console.log('Request data:', config.data);
   const token = localStorage.getItem('access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
   return config;
+}, error => {
+  console.error('Request error:', error);
+  return Promise.reject(error);
 });
 
-api.interceptors.response.use(
-  response => response,
-  error => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('access_token');
-    }
-    return Promise.reject(error);
-  }
-);
+// Интерсептор для логирования ответов
+api.interceptors.response.use(response => {
+  console.log(`[Response] ${response.config.url}`, response.data);
+  return response;
+}, error => {
+  console.error('Response error:', error.response?.data || error.message);
+  return Promise.reject(error);
+});
 
 export const authService = {
   async register(userData) {
@@ -61,24 +66,16 @@ export const authService = {
 
 export const flowerService = {
   async getFlowers() {
-    try {
-      const response = await api.get('/api/v1/flowers/');
-      return response.data;
-    } catch (error) {
-      throw error;
-    }
+  const response = await api.get('/api/v1/flowers/');
+  return response.data.map(flower => ({
+    ...flower,
+    temperature_range: flower.temperature_range || { min: null, max: null }
+  }));
   },
 
   async createFlower(flowerData) {
     try {
-      // Нормализация temperature_range
-      const dataToSend = {
-        ...flowerData,
-        temperature_range: flowerData.temperature_range?.min !== undefined ? 
-                          flowerData.temperature_range : 
-                          null
-      };
-      const response = await api.post('/api/v1/flowers/', dataToSend);
+      const response = await api.post('/api/v1/flowers/', flowerData);
       return response.data;
     } catch (error) {
       throw error;
@@ -87,13 +84,7 @@ export const flowerService = {
 
   async updateFlower(id, flowerData) {
     try {
-      const dataToSend = {
-        ...flowerData,
-        temperature_range: flowerData.temperature_range?.min !== undefined ? 
-                          flowerData.temperature_range : 
-                          null
-      };
-      const response = await api.put(`/api/v1/flowers/${id}`, dataToSend);
+      const response = await api.put(`/api/v1/flowers/${id}`, flowerData);
       return response.data;
     } catch (error) {
       throw error;
