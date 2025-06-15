@@ -140,3 +140,52 @@ button:active {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+/* Кнопка выйти*/
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: 1.5rem;
+}
+
+.error-message {
+  position: relative;
+  padding: 1rem;
+  margin: 1rem;
+  background: #ffebee;
+  color: #c62828;
+  border-radius: 4px;
+}
+
+.error-message button {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.empty-list {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+}
+
+.logout-btn {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
+  padding: 0.5rem 1rem;
+  background: #f44336;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.logout-btn:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+}

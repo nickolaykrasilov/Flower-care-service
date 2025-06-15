@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-function AuthForm({ onSubmit, loading }) {
+function AuthForm({ onSubmit }) {
   const [isLogin, setIsLogin] = useState(true);
   const [formData, setFormData] = useState({
     username: '',
@@ -17,13 +17,6 @@ function AuthForm({ onSubmit, loading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Валидация паролей при регистрации
-    if (!isLogin && formData.password !== formData.password2) {
-      alert('Пароли не совпадают!');
-      return;
-    }
-    
     onSubmit(formData, isLogin);
   };
 
@@ -39,7 +32,6 @@ function AuthForm({ onSubmit, loading }) {
             value={formData.username}
             onChange={handleChange}
             required
-            disabled={loading}
           />
         </div>
         <div>
@@ -50,7 +42,6 @@ function AuthForm({ onSubmit, loading }) {
             value={formData.password}
             onChange={handleChange}
             required
-            disabled={loading}
           />
         </div>
         {!isLogin && (
@@ -62,18 +53,14 @@ function AuthForm({ onSubmit, loading }) {
               value={formData.password2}
               onChange={handleChange}
               required
-              disabled={loading}
             />
           </div>
         )}
-        <button type="submit" disabled={loading}>
-          {loading ? 'Обработка...' : isLogin ? 'Войти' : 'Зарегистрироваться'}
+        <button type="submit">
+          {isLogin ? 'Войти' : 'Зарегистрироваться'}
         </button>
       </form>
-      <button 
-        onClick={() => setIsLogin(!isLogin)} 
-        disabled={loading}
-      >
+      <button onClick={() => setIsLogin(!isLogin)}>
         {isLogin ? 'Нет аккаунта? Зарегистрироваться' : 'Уже есть аккаунт? Войти'}
       </button>
     </div>

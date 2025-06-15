@@ -76,3 +76,23 @@
 .submit-btn:hover {
   background: var(--chamoisee);
 }
+
+.temp-inputs {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.temp-inputs input {
+  width: 60px;
+  padding: 8px;
+}
+
+.temp-inputs span {
+  color: #666;
+}
+
+.submit-btn:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
