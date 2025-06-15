@@ -3,6 +3,7 @@ import { authService, flowerService } from './api';
 import FlowerCard from './components/FlowerCard';
 import FlowerForm from './components/FlowerForm';
 import AuthForm from './components/AuthForm';
+import Notification from './components/Notification';
 import './App.css';
 
 function App() {
@@ -12,6 +13,12 @@ function App() {
   const [error, setError] = useState(null);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [authChecked, setAuthChecked] = useState(false);
+  const [notification, setNotification] = useState({ show: false, message: '' });
+
+  const showNotification = (message) => {
+    setNotification({ show: true, message });
+    setTimeout(() => setNotification({ show: false, message: '' }), 2000);
+  };
 
   const handleApiError = useCallback((error) => {
     console.error('API Error:', error);
@@ -86,8 +93,10 @@ function App() {
     try {
       if (editingFlower) {
         await flowerService.updateFlower(editingFlower.id, flowerData);
+        showNotification(`Растение "${flowerData.name}" успешно обновлено`);
       } else {
         await flowerService.createFlower(flowerData);
+        showNotification(`Растение "${flowerData.name}" успешно добавлено`);
       }
       await loadFlowers();
       setEditingFlower(null);
@@ -103,12 +112,18 @@ function App() {
     try {
       await flowerService.deleteFlower(id);
       setFlowers(prev => prev.filter(f => f.id !== id));
+      showNotification('Растение успешно удалено');
     } catch (err) {
       handleApiError(err);
     } finally {
       setLoading(false);
     }
   }, [handleApiError]);
+
+  const handleEdit = (flower) => {
+    setEditingFlower(flower);
+    showNotification(`Редактируем: ${flower.name}`);
+  };
 
   if (!authChecked) return <div className="loading">Проверка авторизации...</div>;
 
@@ -132,6 +147,11 @@ function App() {
 
       {loading && <div className="loading">Загрузка...</div>}
 
+      <Notification 
+        show={notification.show} 
+        message={notification.message}
+      />
+
       {!isAuthenticated ? (
         <AuthForm onSubmit={handleAuth} loading={loading} />
       ) : (
@@ -148,7 +168,7 @@ function App() {
                   key={flower.id}
                   flower={flower}
                   onDelete={handleDelete}
-                  onEdit={setEditingFlower}
+                  onEdit={handleEdit}
                 />
               ))
             ) : (
