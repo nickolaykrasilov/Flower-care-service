@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = "http://46.8.232.177:8000";
+const API_URL = process.env.REACT_APP_API_URL || "http://46.8.232.177:8000";
 
 const api = axios.create({
   baseURL: API_URL,
@@ -9,10 +9,11 @@ const api = axios.create({
   }
 });
 
-// Интерсептор для логирования запросов
+
 api.interceptors.request.use(config => {
-  console.log(`[Request] ${config.method?.toUpperCase()} ${config.url}`);
-  console.log('Request data:', config.data);
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[Request] ${config.method?.toUpperCase()} ${config.url}`);
+  }
   const token = localStorage.getItem('access_token');
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -23,9 +24,10 @@ api.interceptors.request.use(config => {
   return Promise.reject(error);
 });
 
-// Интерсептор для логирования ответов
 api.interceptors.response.use(response => {
-  console.log(`[Response] ${response.config.url}`, response.data);
+  if (process.env.NODE_ENV !== 'production') {
+    console.log(`[Response] ${response.config.url}`);
+  }
   return response;
 }, error => {
   console.error('Response error:', error.response?.data || error.message);
