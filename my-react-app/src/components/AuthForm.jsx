@@ -34,7 +34,7 @@ function AuthForm({ onSubmit, loading }) {
       <div className="auth-header">
         <h2 className="auth-title" style={{ color: '#4e3d2c' }}>
           {isLogin ? 'Sign In' : 'Sign Up'}
-          <span className="auth-icon">{isLogin ? '🥬' : '🌱'}</span>
+          <span className="auth-icon">{isLogin ? '🪴' : '🌱'}</span>
         </h2>
       </div>
       

@@ -48,24 +48,23 @@
   width: 100%;
   padding: 0.9rem 1rem 0.9rem 3rem;
   border-radius: 999px;
-  border: 2px solid transparent; /* Прозрачная граница по умолчанию */
+  border: none; /* Полностью убрана граница */
   font-size: 1rem;
   transition: all 0.2s ease;
   font-family: sans-serif;
   background-color: #a3c57d;
   color: #6e944a;
   box-sizing: border-box;
+  outline: none; /* Убираем стандартный outline */
 }
 
-/* Граница появляется при фокусе и hover */
+/* Граница появляется только при наведении и фокусе */
 .auth-input:hover {
-  border-color: rgba(110, 148, 74, 0.5); /* Полупрозрачная граница при наведении */
+  box-shadow: 0 0 0 2px rgba(110, 148, 74, 0.5); /* Тень вместо границы */
 }
 
 .auth-input:focus {
-  outline: none;
-  border-color: #6e944a; /* Полноценная граница при фокусе */
-  box-shadow: 0 0 0 3px rgba(110, 148, 74, 0.3);
+  box-shadow: 0 0 0 2px #6e944a, 0 0 0 4px rgba(110, 148, 74, 0.3);
 }
 
 .auth-input::placeholder {

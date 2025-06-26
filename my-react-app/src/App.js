@@ -125,23 +125,23 @@ function App() {
     showNotification(`Редактируем: ${flower.name}`);
   };
 
-  if (!authChecked) return <div className="loading">Проверка авторизации...</div>;
+  if (!authChecked) return <div className="loading-screen">Проверка авторизации...</div>;
 
   return (
     <div className="app">
-      <header>
-        <h1>ZenGarden</h1>
+      <header className="app-header">
+        <h1 className="app-title">ZenGarden</h1>
         {isAuthenticated && (
-          <button onClick={handleLogout} disabled={loading}>
+          <button className="logout-btn" onClick={handleLogout} disabled={loading}>
             Выйти
           </button>
         )}
       </header>
 
       {error && (
-        <div className="error">
+        <div className="error-message">
           {error}
-          <button onClick={() => setError(null)}>×</button>
+          <button className="btn btn--text" onClick={() => setError(null)}>×</button>
         </div>
       )}
 

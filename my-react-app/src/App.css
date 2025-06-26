@@ -1,6 +1,5 @@
-
 :root {
-  /*  Цветовая палитра */
+  /* Цветовая палитра */
   --parchment: #f0e2ad;
   --tea-green: #dde5b6;
   --olivine: #adc178;
@@ -12,7 +11,7 @@
   --light-grey: #848787;
   --error: #fa4f4f;
 
-  /*  Типографика */
+  /* Типографика */
   --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, 
                 Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 
                 sans-serif;
@@ -22,7 +21,7 @@
   --text-body-small: 16px;
   --text-label: 20px;
 
-  /*  Тени */
+  /* Тени */
   --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
   --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
   --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
@@ -38,7 +37,12 @@ body {
   line-height: 1.5;
 }
 
-/*  Типографика */
+.app {
+  min-height: 100vh;
+  padding: 0 1rem;
+}
+
+/* Типографика */
 .text-title {
   font-size: var(--text-title);
   font-weight: var(--font-weight-bold);
@@ -64,9 +68,9 @@ body {
   letter-spacing: 0.5px;
 }
 
-/*  Компоненты */
+/* Компоненты */
 
-/*  Кнопки */
+/* Кнопки */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -111,7 +115,7 @@ body {
   padding: 0;
 }
 
-/*  Карточки */
+/* Карточки */
 .flower-card {
   background-color: var(--white);
   border: 1px solid var(--tea-green);
@@ -148,7 +152,7 @@ body {
   gap: 0.8rem;
 }
 
-/*  Свойства */
+/* Свойства */
 .flower-property {
   display: flex;
   align-items: center;
@@ -168,22 +172,27 @@ body {
   min-width: 80px;
 }
 
-/*  Шапка приложения */
+/* Шапка приложения */
 .app-header {
   text-align: center;
-  padding: 2rem 1rem;
-  margin-bottom: 1rem;
+  padding: 2rem 0;
+  position: relative;
 }
 
-.app-header__title {
+.app-title {
+  font-size: 3rem;
+  color: var(--dark-olive-green);
   margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 10px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 1px;
+  text-shadow: 2px 2px 4px rgba(108, 88, 76, 0.2);
+  position: relative;
+  display: inline-block;
 }
 
-/*  Список */
+
+
+/* Список */
 .flower-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -200,6 +209,9 @@ body {
   border-radius: 4px;
   margin: 1rem 0;
   font-weight: var(--font-weight-bold);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .notification {
@@ -225,15 +237,47 @@ body {
   color: var(--chamoisee);
 }
 
-/*  Кнопка выхода */
+.loading {
+  text-align: center;
+  padding: 1rem;
+  font-size: var(--text-body);
+  color: var(--dark-olive-green);
+}
+
+.empty {
+  text-align: center;
+  padding: 2rem;
+  font-size: var(--text-body);
+  color: var(--chamoisee);
+  grid-column: 1 / -1;
+}
+
+/* Кнопка выхода */
 .logout-btn {
   position: fixed;
   right: 1rem;
   top: 1rem;
   z-index: 100;
+  background-color: var(--chamoisee);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 999px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-/*  Адаптивность */
+.logout-btn:hover {
+  background-color: var(--umber);
+}
+
+.logout-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+/* Адаптивность */
 @media (max-width: 768px) {
   :root {
     --text-title: 24px;
@@ -244,10 +288,32 @@ body {
   .flower-list {
     grid-template-columns: 1fr;
   }
+
+  .app-title {
+    font-size: 2.2rem;
+  }
+  
+  .app-title::after,
+  .app-title::before {
+    font-size: 1.2rem;
+    right: -30px;
+    left: -30px;
+  }
 }
 
 @media (min-width: 1200px) {
   .flower-list {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .app-title {
+    font-size: 1.8rem;
+  }
+  
+  .app-title::after,
+  .app-title::before {
+    display: none;
   }
 }
