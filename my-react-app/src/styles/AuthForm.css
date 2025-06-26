@@ -1,137 +1,202 @@
-
+/* Основные стили контейнера */
 .auth-container {
   max-width: 400px;
+  width: 90%;
   margin: 2rem auto;
   padding: 2rem;
-  background-color: rgba(255, 255, 255, 0.9);
+  background-color: #f0e2a0;
   border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(108, 88, 76, 0.15);
+  box-shadow: 0 8px 20px rgba(110, 148, 74, 0.15);
+  box-sizing: border-box;
 }
 
+/* Заголовок формы */
 .auth-header {
   text-align: center;
   margin-bottom: 2rem;
 }
 
 .auth-title {
-  color: #6c584c;
   font-size: 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
+  font-weight: bold;
+  font-family: sans-serif;
+  color: #4e3d2c;
+  margin: 0;
 }
 
 .auth-icon {
-  color: #7b9b44;
+  font-size: 1.5rem;
 }
 
+/* Форма и элементы ввода */
 .auth-form {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.2rem;
 }
 
 .input-group {
   position: relative;
+  width: 100%;
 }
 
 .auth-input {
   width: 100%;
-  padding: 1rem 1rem 1rem 3rem;
-  border-radius: 50px;
-  border: 2px solid #dde5b6;
-  background-color: rgba(221, 229, 182, 0.2);
-  color: #6c584c;
+  padding: 0.9rem 1rem 0.9rem 3rem;
+  border-radius: 999px;
+  border: 2px solid transparent; /* Прозрачная граница по умолчанию */
   font-size: 1rem;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
+  font-family: sans-serif;
+  background-color: #a3c57d;
+  color: #6e944a;
+  box-sizing: border-box;
+}
+
+/* Граница появляется при фокусе и hover */
+.auth-input:hover {
+  border-color: rgba(110, 148, 74, 0.5); /* Полупрозрачная граница при наведении */
 }
 
 .auth-input:focus {
   outline: none;
-  border-color: #adc178;
-  box-shadow: 0 0 0 3px rgba(173, 193, 120, 0.3);
+  border-color: #6e944a; /* Полноценная граница при фокусе */
+  box-shadow: 0 0 0 3px rgba(110, 148, 74, 0.3);
+}
+
+.auth-input::placeholder {
+  color: rgba(110, 148, 74, 0.7);
+  opacity: 1;
 }
 
 .auth-input:disabled {
-  background-color: #f0f0f0;
+  background-color: #d1d9b2;
   cursor: not-allowed;
 }
 
+/* Иконки внутри полей */
 .input-icon {
   position: absolute;
-  left: 1rem;
+  left: 1.2rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #7b9b44;
+  font-size: 1rem;
+  color: #6e944a;
+  pointer-events: none;
 }
 
 .toggle-password {
   position: absolute;
-  right: 1rem;
+  right: 1.2rem;
   top: 50%;
   transform: translateY(-50%);
-  color: #a98467;
   cursor: pointer;
+  font-size: 1rem;
+  user-select: none;
+  color: #6e944a;
+  background: none;
+  border: none;
+  padding: 0;
 }
 
+/* Кнопка отправки формы */
 .auth-submit-btn {
   padding: 1rem;
-  border-radius: 50px;
+  border-radius: 999px;
   border: none;
-  background-color: #6c584c;
-  color: white;
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-  margin-top: 1rem;
+  margin-top: 0.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.8rem;
+  font-family: sans-serif;
+  background-color: #9e7c5a;
+  color: #4e3d2c;
+  width: 100%;
 }
 
 .auth-submit-btn:hover {
-  background-color: #5a4a3f;
   transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(158, 124, 90, 0.3);
+}
+
+.auth-submit-btn:active {
+  transform: translateY(0);
 }
 
 .auth-submit-btn:disabled {
-  background-color: #cccccc;
+  background-color: #c5b19e;
   cursor: not-allowed;
   transform: none;
+  box-shadow: none;
 }
 
+/* Кнопка переключения между входом/регистрацией */
 .auth-toggle-btn {
   background: none;
   border: none;
-  color: #7b9b44;
   font-size: 1rem;
   cursor: pointer;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
   text-align: center;
   transition: all 0.3s ease;
   padding: 0.5rem;
   border-radius: 6px;
+  font-family: sans-serif;
+  font-weight: 500;
+  color: #4e3d2c;
+  width: 100%;
 }
 
 .auth-toggle-btn:hover {
-  color: #5a4a3f;
-  background-color: rgba(221, 229, 182, 0.3);
+  background-color: rgba(163, 197, 125, 0.3);
 }
 
 .auth-toggle-btn:disabled {
-  color: #cccccc;
+  color: #a3a3a3;
   cursor: not-allowed;
   background: none;
 }
 
 /* Анимация загрузки */
+.spinner {
+  display: inline-block;
+  animation: spin 1s linear infinite;
+}
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-.fa-spinner {
-  animation: spin 1s linear infinite;
+/* Адаптация для маленьких экранов */
+@media (max-width: 480px) {
+  .auth-container {
+    padding: 1.5rem;
+    margin: 1rem auto;
+  }
+  
+  .auth-title {
+    font-size: 1.5rem;
+  }
+  
+  .auth-input {
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    font-size: 0.95rem;
+  }
+  
+  .input-icon {
+    left: 1rem;
+  }
+  
+  .toggle-password {
+    right: 1rem;
+  }
 }

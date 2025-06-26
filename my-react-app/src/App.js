@@ -130,7 +130,7 @@ function App() {
   return (
     <div className="app">
       <header>
-        <h1>🌿 Мой цветочный дневник</h1>
+        <h1>ZenGarden</h1>
         {isAuthenticated && (
           <button onClick={handleLogout} disabled={loading}>
             Выйти

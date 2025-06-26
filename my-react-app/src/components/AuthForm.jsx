@@ -1,7 +1,5 @@
 import { useState } from 'react';
-
 import '../styles/AuthForm.css';
-
 
 function AuthForm({ onSubmit, loading }) {
   const [isLogin, setIsLogin] = useState(true);
@@ -32,64 +30,83 @@ function AuthForm({ onSubmit, loading }) {
   };
 
   return (
-    <div className="auth-container">
+    <div className="auth-container" style={{ backgroundColor: '#f0e2a0' }}>
       <div className="auth-header">
-        <h2 className="auth-title">
-          {isLogin ? 'Вход' : 'Регистрация'}
-          <i className={`fas fa-${isLogin ? 'sign-in-alt' : 'user-plus'} auth-icon`}></i>
+        <h2 className="auth-title" style={{ color: '#4e3d2c' }}>
+          {isLogin ? 'Sign In' : 'Sign Up'}
+          <span className="auth-icon">{isLogin ? '🥬' : '🌱'}</span>
         </h2>
       </div>
       
       <form onSubmit={handleSubmit} className="auth-form">
         <div className="input-group">
-          <i className="fas fa-user input-icon"></i>
+          <span className="input-icon">👤</span>
           <input
             type="text"
             name="username"
             value={formData.username}
             onChange={handleChange}
-            placeholder="Имя пользователя"
+            placeholder="Username"
             required
             disabled={loading}
             className="auth-input"
+            style={{
+              backgroundColor: '#a3c57d',
+              borderColor: '#6e944a',
+              color: '#6e944a'
+            }}
           />
         </div>
         
         <div className="input-group">
-          <i className="fas fa-lock input-icon"></i>
+          <span className="input-icon">🔒</span>
           <input
             type={showPassword ? "text" : "password"}
             name="password"
             value={formData.password}
             onChange={handleChange}
-            placeholder="Пароль"
+            placeholder="Password"
             required
             disabled={loading}
             className="auth-input"
+            style={{
+              backgroundColor: '#a3c57d',
+              borderColor: '#6e944a',
+              color: '#6e944a'
+            }}
           />
-          <i 
-            className={`fas fa-eye${showPassword ? '-slash' : ''} toggle-password`}
+          <span 
+            className="toggle-password"
             onClick={() => setShowPassword(!showPassword)}
-          ></i>
+          >
+            {showPassword ? '👁️' : '👁️‍🗨️'}
+          </span>
         </div>
         
         {!isLogin && (
           <div className="input-group">
-            <i className="fas fa-lock input-icon"></i>
+            <span className="input-icon">🔒</span>
             <input
               type={showConfirmPassword ? "text" : "password"}
               name="password2"
               value={formData.password2}
               onChange={handleChange}
-              placeholder="Подтвердите пароль"
+              placeholder="Confirm Password"
               required
               disabled={loading}
               className="auth-input"
+              style={{
+                backgroundColor: '#a3c57d',
+                borderColor: '#6e944a',
+                color: '#6e944a'
+              }}
             />
-            <i 
-              className={`fas fa-eye${showConfirmPassword ? '-slash' : ''} toggle-password`}
+            <span 
+              className="toggle-password"
               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-            ></i>
+            >
+              {showConfirmPassword ? '👁️' : '👁️‍🗨️'}
+            </span>
           </div>
         )}
         
@@ -97,15 +114,19 @@ function AuthForm({ onSubmit, loading }) {
           type="submit" 
           disabled={loading}
           className="auth-submit-btn"
+          style={{
+            backgroundColor: '#9e7c5a',
+            color: '#4e3d2c'
+          }}
         >
           {loading ? (
             <>
-              <i className="fas fa-spinner fa-spin"></i> Обработка...
+              <span className="spinner">🌀</span> Processing...
             </>
           ) : isLogin ? (
-            'Войти'
+            'Sign In'
           ) : (
-            'Зарегистрироваться'
+            'Sign Up'
           )}
         </button>
       </form>
@@ -114,8 +135,9 @@ function AuthForm({ onSubmit, loading }) {
         onClick={() => setIsLogin(!isLogin)} 
         disabled={loading}
         className="auth-toggle-btn"
+        style={{ color: '#4e3d2c' }}
       >
-        {isLogin ? 'Нет аккаунта? Зарегистрироваться' : 'Уже есть аккаунт? Войти'}
+        {isLogin ? 'To Sign Up?' : 'To Sign In?'}
       </button>
     </div>
   );
