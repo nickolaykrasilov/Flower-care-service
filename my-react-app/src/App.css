@@ -1,120 +1,181 @@
-/* Цветовая палитра */
+
 :root {
-  --parchment: #f0ead2;
+  /*  Цветовая палитра */
+  --parchment: #f0e2ad;
   --tea-green: #dde5b6;
   --olivine: #adc178;
+  --dark-olive-green: #7b9b44;
   --chamoisee: #a98467;
   --umber: #6c584c;
+  --white: #ffffff;
+  --dark-grey: #363737;
+  --light-grey: #848787;
+  --error: #fa4f4f;
+
+  /*  Типографика */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, 
+                Ubuntu, Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', 
+                sans-serif;
+  --font-weight-bold: 800;
+  --text-title: 28px;
+  --text-body: 20px;
+  --text-body-small: 16px;
+  --text-label: 20px;
+
+  /*  Тени */
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
 }
 
-/* Кнопки действий */
-.card-actions {
-  display: flex;
-  gap: 10px;
-  margin-top: 15px;
-}
-
-.edit-btn {
-  background-color: var(--olivine);
+/* Базовые стили */
+body {
+  font-family: var(--font-family);
+  background-color: var(--parchment);
   color: var(--umber);
+  margin: 0;
+  padding: 0;
+  line-height: 1.5;
 }
 
-.delete-btn {
-  background-color: var(--chamoisee);
-  color: var(--parchment);
+/*  Типографика */
+.text-title {
+  font-size: var(--text-title);
+  font-weight: var(--font-weight-bold);
+  line-height: 1.2;
+  color: var(--chamoisee);
 }
 
-.cancel-btn {
-  background-color: #f0f0f0;
-  color: var(--umber);
-  margin-left: 10px;
+.text-body {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-bold);
 }
 
-/* Состояния кнопок */
-button:hover {
+.text-body-small {
+  font-size: var(--text-body-small);
+  font-weight: var(--font-weight-bold);
+}
+
+.text-label {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-bold);
+  color: var(--dark-olive-green);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/*  Компоненты */
+
+/*  Кнопки */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  border-radius: 6px;
+  font-weight: var(--font-weight-bold);
+  font-size: var(--text-body-small);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn:hover {
   opacity: 0.9;
   transform: translateY(-1px);
 }
 
-button:active {
+.btn:active {
   transform: translateY(0);
 }
 
-/* Форма в режиме редактирования */
-.flower-form.editing {
-  border: 2px solid var(--olivine);
+.btn--primary {
+  background-color: var(--olivine);
+  color: var(--white);
 }
 
+.btn--secondary {
+  background-color: var(--dark-olive-green);
+  color: var(--white);
+}
+
+.btn--danger {
+  background-color: var(--chamoisee);
+  color: var(--white);
+}
+
+.btn--text {
+  background: transparent;
+  color: var(--umber);
+  padding: 0;
+}
+
+/*  Карточки */
 .flower-card {
+  background-color: var(--white);
+  border: 1px solid var(--tea-green);
   border-radius: 10px;
   padding: 1.5rem;
-  margin: 1rem 0;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: var(--shadow-sm);
   transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 1.5rem;
 }
 
 .flower-card:hover {
   transform: translateY(-3px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: var(--shadow-lg);
 }
 
+.flower-card__header {
+  border-bottom: 1px solid var(--tea-green);
+  padding-bottom: 1rem;
+  margin-bottom: 1rem;
+}
+
+.flower-card__title {
+  font-size: var(--text-body);
+  color: var(--dark-olive-green);
+  margin: 0;
+}
+
+.flower-card__content {
+  margin-bottom: 1rem;
+}
+
+.flower-card__actions {
+  display: flex;
+  gap: 0.8rem;
+}
+
+/*  Свойства */
 .flower-property {
   display: flex;
   align-items: center;
-  margin: 0.8rem 0;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
 }
 
 .property-icon {
-  margin-right: 0.8rem;
   color: var(--chamoisee);
-  min-width: 20px;
+  min-width: 24px;
+  text-align: center;
 }
 
 .property-label {
-  font-weight: 600;
-  margin-right: 0.5rem;
-  color: var(--umber);
+  font-weight: var(--font-weight-bold);
+  color: var(--dark-olive-green);
+  min-width: 80px;
 }
 
-.property-value {
-  color: var(--umber);
-}
-
-.card-actions {
-  display: flex;
-  gap: 0.8rem;
-  margin-top: 1.5rem;
-}
-
-.card-actions button {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.6rem 1rem;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s ease;
-}
-
-.card-actions button:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-.card-actions button:active {
-  transform: translateY(0);
-}
-
+/*  Шапка приложения */
 .app-header {
   text-align: center;
-  margin-bottom: 30px;
+  padding: 2rem 1rem;
+  margin-bottom: 1rem;
 }
 
-.app-header h1 {
-  color: var(--chamoisee);
-  font-size: 1.8rem;
+.app-header__title {
   margin: 0;
   display: flex;
   align-items: center;
@@ -122,16 +183,66 @@ button:active {
   gap: 10px;
 }
 
+/*  Список */
 .flower-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 20px;
-  padding: 0 20px;
+  gap: 1.5rem;
+  padding: 0 1rem;
 }
 
-@media (min-width: 768px) {
+/* Сообщения */
+.error-message {
+  padding: 1rem;
+  background: color-mix(in srgb, var(--error) 10%, white);
+  color: var(--error);
+  border-left: 4px solid var(--error);
+  border-radius: 4px;
+  margin: 1rem 0;
+  font-weight: var(--font-weight-bold);
+}
+
+.notification {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1rem 1.5rem;
+  background: var(--dark-grey);
+  color: var(--white);
+  border-radius: 8px;
+  box-shadow: var(--shadow-lg);
+  z-index: 1000;
+  font-weight: var(--font-weight-bold);
+}
+
+/* Загрузка */
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  font-size: var(--text-title);
+  color: var(--chamoisee);
+}
+
+/*  Кнопка выхода */
+.logout-btn {
+  position: fixed;
+  right: 1rem;
+  top: 1rem;
+  z-index: 100;
+}
+
+/*  Адаптивность */
+@media (max-width: 768px) {
+  :root {
+    --text-title: 24px;
+    --text-body: 18px;
+    --text-body-small: 15px;
+  }
+  
   .flower-list {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
   }
 }
 
@@ -139,53 +250,4 @@ button:active {
   .flower-list {
     grid-template-columns: repeat(3, 1fr);
   }
-}
-/* Кнопка выйти*/
-.loading-screen {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  font-size: 1.5rem;
-}
-
-.error-message {
-  position: relative;
-  padding: 1rem;
-  margin: 1rem;
-  background: #ffebee;
-  color: #c62828;
-  border-radius: 4px;
-}
-
-.error-message button {
-  position: absolute;
-  right: 0.5rem;
-  top: 0.5rem;
-  background: none;
-  border: none;
-  cursor: pointer;
-}
-
-.empty-list {
-  text-align: center;
-  padding: 2rem;
-  color: #666;
-}
-
-.logout-btn {
-  position: absolute;
-  right: 1rem;
-  top: 1rem;
-  padding: 0.5rem 1rem;
-  background: #f44336;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-.logout-btn:disabled {
-  background: #ccc;
-  cursor: not-allowed;
 }

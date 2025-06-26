@@ -6,14 +6,12 @@ const api = axios.create({
   baseURL: API_URL,
   headers: {
     "Content-Type": "application/json",
-    // Добавьте, если API требует авторизацию:
-    // "Authorization": "Bearer ваш_токен"
   }
 });
 
 export const getFlowers = async () => {
   try {
-    const response = await api.get("/api/flowers"); // Уточните точный эндпоинт!
+    const response = await api.get("/api/flowers"); 
     return response.data;
   } catch (error) {
     console.error("Error fetching flowers:", error);

@@ -1,0 +1,137 @@
+
+.auth-container {
+  max-width: 400px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(108, 88, 76, 0.15);
+}
+
+.auth-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.auth-title {
+  color: #6c584c;
+  font-size: 1.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.auth-icon {
+  color: #7b9b44;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.input-group {
+  position: relative;
+}
+
+.auth-input {
+  width: 100%;
+  padding: 1rem 1rem 1rem 3rem;
+  border-radius: 50px;
+  border: 2px solid #dde5b6;
+  background-color: rgba(221, 229, 182, 0.2);
+  color: #6c584c;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.auth-input:focus {
+  outline: none;
+  border-color: #adc178;
+  box-shadow: 0 0 0 3px rgba(173, 193, 120, 0.3);
+}
+
+.auth-input:disabled {
+  background-color: #f0f0f0;
+  cursor: not-allowed;
+}
+
+.input-icon {
+  position: absolute;
+  left: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #7b9b44;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 1rem;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #a98467;
+  cursor: pointer;
+}
+
+.auth-submit-btn {
+  padding: 1rem;
+  border-radius: 50px;
+  border: none;
+  background-color: #6c584c;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+}
+
+.auth-submit-btn:hover {
+  background-color: #5a4a3f;
+  transform: translateY(-2px);
+}
+
+.auth-submit-btn:disabled {
+  background-color: #cccccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.auth-toggle-btn {
+  background: none;
+  border: none;
+  color: #7b9b44;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 1.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  padding: 0.5rem;
+  border-radius: 6px;
+}
+
+.auth-toggle-btn:hover {
+  color: #5a4a3f;
+  background-color: rgba(221, 229, 182, 0.3);
+}
+
+.auth-toggle-btn:disabled {
+  color: #cccccc;
+  cursor: not-allowed;
+  background: none;
+}
+
+/* Анимация загрузки */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.fa-spinner {
+  animation: spin 1s linear infinite;
+}

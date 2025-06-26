@@ -1,12 +1,31 @@
 :root {
-  /* Основная палитра */
-  --parchment: #f0ead2;
-  --tea-green: #dde5b6;
-  --olivine: #adc178;
-  --chamoisee: #a98467;
-  --umber: #6c584c;
-  
-  /* Дополнительные оттенки */
-  --olivine-light: #c0d28a;
-  --chamoisee-light: #b5947d;
+  /*  Основная палитра */
+  --parchment: #f0e2ad;       /* RGB(240, 226, 173) */
+  --tea-green: #dde5b6;       /* RGB(221, 229, 182) */
+  --olivine: #adc178;         /* RGB(173, 193, 120) */
+  --dark-olive-green: #7b9b44;/* RGB(123, 155, 68) */
+  --chamoisee: #a98467;       /* RGB(169, 132, 103) */
+  --umber: #6c584c;           /* RGB(108, 88, 76) */
+
+  /*  Текст и фон */
+  --white: #ffffff;           /* RGB(255, 255, 255) */
+  --dark-grey: #363737;       /* RGB(54, 55, 55) */
+  --light-grey: #848787;      /* RGB(132, 135, 135) */
+
+  /*  Ошибки и состояния */
+  --error: #fa4f4f;           /* RGB(250, 79, 79) */
+  --error-light: #ffebee;     /* Для фона ошибок */
+
+  /*  Дополнительные оттенки */
+  --olivine-light: #c0d28a;   /* RGB(192, 210, 138) */
+  --chamoisee-light: #b5947d; /* RGB(181, 148, 125) */
+
+  /*  Прозрачности */
+  --chamoisee-50: rgba(169, 132, 103, 0.5);
+  --umber-20: rgba(108, 88, 76, 0.2);
+
+  /*  Контрастные цвета текста */
+  --on-parchment: var(--dark-grey);
+  --on-olivine: var(--white);
+  --on-error: var(--white);
 }
