@@ -1,133 +1,136 @@
 @import './colors.css';
 
+/* Основные стили карточки */
 .flower-card {
-  background-color: var(--tea-green);
+  background-color: #F5F5DC !important; /* Принудительно применяем цвет */
   border: 1px solid var(--olivine);
   border-radius: 12px;
-  padding: 15px;
+  padding: 16px;
   color: var(--umber);
   height: 100%;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: all 0.3s ease;
   position: relative;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
 }
 
+/* Убедимся, что дочерние элементы не переопределяют фон */
+.flower-card * {
+  background-color: transparent !important;
+}
+
+/* Ховер-эффект */
 .flower-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-5px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
+  border-color: var(--olivine-dark);
 }
 
+/* Шапка карточки */
 .flower-card-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--olivine-light);
+  margin-bottom: 14px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(173, 193, 120, 0.4);
 }
 
+/* Заголовок */
 .flower-card-title {
   margin: 0;
-  color: var(--chamoisee);
-  font-size: 1.1rem;
+  color: var(--chamoisee-dark);
+  font-size: 1.25rem;
   font-weight: 600;
 }
 
+/* Кнопки действий */
 .flower-card-actions {
   display: flex;
-  gap: 8px;
+  gap: 10px;
 }
 
 .flower-card-button {
-  background: none;
+  background: rgba(255,255,255,0.8) !important;
   border: none;
   cursor: pointer;
-  padding: 6px;
+  padding: 8px;
   border-radius: 50%;
   transition: all 0.3s ease;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 32px;
-  height: 32px;
-  position: relative;
+  width: 34px;
+  height: 34px;
 }
 
-.edit-button {
-  color: var(--olivine);
-}
-
-.delete-button {
-  color: var(--chamoisee);
-}
+/* Стили для кнопок */
+.edit-button { color: var(--olivine-dark); }
+.delete-button { color: var(--chamoisee-dark); }
 
 .edit-button:hover {
-  background-color: var(--olivine);
-  color: white;
-  transform: scale(1.1);
-  box-shadow: 0 0 0 2px rgba(173, 193, 120, 0.3);
+  background: var(--olivine) !important;
+  color: white !important;
 }
 
 .delete-button:hover {
-  background-color: var(--chamoisee);
-  color: white;
-  transform: scale(1.1);
-  box-shadow: 0 0 0 2px rgba(169, 132, 103, 0.3);
+  background: var(--chamoisee) !important;
+  color: white !important;
 }
 
-.flower-card-button::after {
-  content: attr(aria-label);
-  position: absolute;
-  bottom: -30px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--umber);
-  color: white;
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  opacity: 0;
-  transition: opacity 0.2s;
-  pointer-events: none;
-  white-space: nowrap;
-}
-
-.flower-card-button:hover::after {
-  opacity: 1;
-}
-
+/* Свойства растения */
 .flower-properties {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  margin-bottom: 12px;
+  gap: 12px;
+  margin-bottom: 16px;
 }
 
 .flower-property {
   display: flex;
   align-items: center;
-  gap: 8px;
-  font-size: 0.9rem;
+  gap: 12px;
+  font-size: 0.95rem;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.6) !important;
 }
 
+/* Иконки свойств */
 .property-icon {
   color: var(--chamoisee);
-  flex-shrink: 0;
+  font-size: 1.1rem;
+  min-width: 24px;
+  text-align: center;
 }
 
+/* Комментарий */
 .flower-comment {
   margin-top: auto;
-  padding-top: 10px;
-  border-top: 1px dashed var(--olivine-light);
+  padding-top: 14px;
+  border-top: 1px dashed rgba(173, 193, 120, 0.4);
   display: flex;
-  gap: 8px;
-  font-size: 0.85rem;
+  gap: 12px;
+  font-size: 0.9rem;
+  background: rgba(255,255,255,0.4) !important;
+  padding: 12px;
+  border-radius: 8px;
 }
 
-.comment-icon {
-  color: var(--chamoisee);
-  margin-top: 2px;
-  flex-shrink: 0;
+/* Адаптивность */
+@media (max-width: 768px) {
+  .flower-card {
+    padding: 14px;
+  }
+  .flower-card-title {
+    font-size: 1.15rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .flower-card {
+    padding: 12px;
+  }
 }
