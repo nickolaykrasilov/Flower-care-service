@@ -78,18 +78,18 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
 
   // Варианты для селектов
   const wateringOptions = [
-    { value: null, label: 'Не указано' },
-    { value: 'Редкий', label: 'Редкий' },
-    { value: 'Умеренный', label: 'Умеренный' },
-    { value: 'Частый', label: 'Частый' }
+    { value: null, label: 'Not specified' },
+    { value: 'Light', label: 'Light' },
+    { value: 'Medium', label: 'Medium' },
+    { value: 'Deep', label: 'Deep' }
   ];
 
   const lightOptions = [
-    { value: null, label: 'Не указано' },
-    { value: 'Тень', label: 'Тень' },
-    { value: 'Полутень', label: 'Полутень' },
-    { value: 'Рассеянный свет', label: 'Рассеянный свет' },
-    { value: 'Прямое солнце', label: 'Прямое солнце' }
+    { value: null, label: 'Not specified' },
+    { value: 'Shadow', label: 'Shadow' },
+    { value: 'Penumbra', label: 'Penumbra' },
+    { value: 'Diffused light', label: 'Diffused light' },
+    { value: 'Direct light', label: 'Direct light' }
   ];
 
   return (
@@ -97,23 +97,23 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
       <h2 className="form-title">
         {initialData ? (
           <>
-            <FaEdit /> Редактировать растение
+            <FaEdit /> Edit
           </>
         ) : (
           <>
-            <FaPlus /> Добавить растение
+            <FaPlus /> Add
           </>
         )}
       </h2>
 
       <div className="form-group">
-        <label>Название растения *</label>
+        <label>Name</label>
         <input
           type="text"
           name="name"
           value={formData.name}
           onChange={handleChange}
-          placeholder="Например: Фикус Бенджамина"
+          placeholder="For example: Ficus Benjamin"
           required
           disabled={loading}
         />
@@ -121,7 +121,7 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
 
       <div className="form-row">
         <div className="form-group">
-          <label>Интенсивность полива</label>
+          <label>Watering</label>
           <select 
             name="watering_intensity" 
             value={formData.watering_intensity || ''}
@@ -137,7 +137,7 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
         </div>
 
         <div className="form-group">
-          <label>Освещение</label>
+          <label>Ligth level</label>
           <select 
             name="light_level" 
             value={formData.light_level || ''}
@@ -153,7 +153,7 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
         </div>
 
         <div className="form-group">
-          <label>Температурный диапазон (°C)</label>
+          <label>Temp</label>
           <div className="temp-inputs">
             <input
               type="number"
@@ -177,12 +177,12 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
       </div>
 
       <div className="form-group">
-        <label>Дополнительные заметки</label>
+        <label>Note</label>
         <textarea
           name="comment"
           value={formData.comment || ''}
           onChange={handleChange}
-          placeholder="Особенности ухода, предпочтения..."
+          placeholder="Features of care, preferences..."
           rows="3"
           disabled={loading}
         />
@@ -194,9 +194,9 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
         disabled={loading}
       >
         {loading ? (
-          <span>Сохранение...</span>
+          <span>Conservation...</span>
         ) : (
-          initialData ? 'Обновить' : 'Добавить'
+          initialData ? 'Update' : 'Add'
         )}
       </button>
     </form>

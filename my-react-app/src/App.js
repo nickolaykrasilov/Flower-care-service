@@ -22,7 +22,7 @@ function App() {
 
   const handleApiError = useCallback((error) => {
     console.error('API Error:', error);
-    setError(error.response?.data?.detail || error.message || 'Ошибка сервера');
+    setError(error.response?.data?.detail || error.message || 'Server error');
     return error;
   }, []);
 
@@ -93,10 +93,10 @@ function App() {
     try {
       if (editingFlower) {
         await flowerService.updateFlower(editingFlower.id, flowerData);
-        showNotification(`Растение "${flowerData.name}" успешно обновлено`);
+        showNotification(`Plant "${flowerData.name}" successfully updated`);
       } else {
         await flowerService.createFlower(flowerData);
-        showNotification(`Растение "${flowerData.name}" успешно добавлено`);
+        showNotification(`Plant "${flowerData.name}" successfully added`);
       }
       await loadFlowers();
       setEditingFlower(null);
@@ -112,7 +112,7 @@ function App() {
     try {
       await flowerService.deleteFlower(id);
       setFlowers(prev => prev.filter(f => f.id !== id));
-      showNotification('Растение успешно удалено');
+      showNotification('The plant was successfully removed');
     } catch (err) {
       handleApiError(err);
     } finally {
@@ -122,10 +122,10 @@ function App() {
 
   const handleEdit = (flower) => {
     setEditingFlower(flower);
-    showNotification(`Редактируем: ${flower.name}`);
+    showNotification(`Editing: ${flower.name}`);
   };
 
-  if (!authChecked) return <div className="loading-screen">Проверка авторизации...</div>;
+  if (!authChecked) return <div className="loading-screen">Authorization verification...</div>;
 
   return (
     <div className="app">
@@ -133,7 +133,7 @@ function App() {
         <h1 className="app-title">ZenGarden</h1>
         {isAuthenticated && (
           <button className="logout-btn" onClick={handleLogout} disabled={loading}>
-            Выйти
+            Exit
           </button>
         )}
       </header>
@@ -145,7 +145,7 @@ function App() {
         </div>
       )}
 
-      {loading && <div className="loading">Загрузка...</div>}
+      {loading && <div className="loading">Loading...</div>}
 
       <Notification 
         show={notification.show} 
@@ -172,7 +172,7 @@ function App() {
                 />
               ))
             ) : (
-              <div className="empty">Нет добавленных растений</div>
+              <div className="empty">No added plants</div>
             )}
           </div>
         </>

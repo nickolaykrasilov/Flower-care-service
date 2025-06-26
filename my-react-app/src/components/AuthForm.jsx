@@ -22,7 +22,7 @@ function AuthForm({ onSubmit, loading }) {
     e.preventDefault();
     
     if (!isLogin && formData.password !== formData.password2) {
-      alert('Пароли не совпадают!');
+      alert('Passwords don`t match!');
       return;
     }
     
