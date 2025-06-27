@@ -5,47 +5,65 @@
   border: 1px solid var(--primary);
   border-radius: 12px;
   padding: 20px;
-  color: var(--on-surface);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  font-family: 'Roboto', sans-serif;
   max-width: 500px;
-  font-family: 'Roboto', sans-serif; /* Улучшенный шрифт */
 }
 
-.flower-properties {
+/* Property Rows Container */
+.property-rows {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
 }
 
-.flower-property {
+/* Property Row Structure */
+.property-row {
   display: flex;
-  min-height: 40px;
+  min-height: 48px;
   border-radius: 25px;
   overflow: hidden;
 }
 
 .property-prefix {
+  width: 30%;
   display: flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 0 16px;
   font-weight: 600;
+  position: relative;
+}
+
+.property-prefix::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 1px;
+  background-color: rgba(255, 255, 255, 0.3);
 }
 
 .property-content {
-  flex: 1;
+  width: 70%;
   display: flex;
   align-items: center;
-  padding: 0 12px;
+  padding: 0 16px;
   background-color: var(--tertiary);
   color: var(--on-tertiary);
-  font-size: 0.95rem;
-  line-height: 1.5;
 }
 
-/* Специальные стили префиксов */
+/* Color Schemes */
+.name-prefix {
+  background-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.name-content {
+  color: var(--primary);
+  font-weight: 600;
+}
+
 .watering-prefix {
   background-color: var(--watering);
   color: var(--on-watering);
@@ -56,72 +74,69 @@
   color: var(--on-light-level);
 }
 
-.name-value {
-  color: var(--primary);
-  font-weight: 600;
+.temperature-prefix {
+  background-color: var(--temperature);
+  color: var(--on-temperature);
 }
 
-.property-icon {
-  margin-right: 8px;
-  font-size: 1rem;
+.note-prefix {
+  background-color: var(--surface-container-dark);
+  color: var(--on-surface-container-dark);
 }
 
-.flower-note {
-  background-color: var(--tertiary);
-  border-radius: 25px;
-  padding: 12px;
-  margin-top: 8px;
-  color: var(--on-tertiary);
+.note-content {
   font-style: italic;
-  min-height: 60px;
+}
+
+/* Emoji spacing */
+.property-prefix span {
+  margin-left: 4px;
+}
+
+/* Action Buttons */
+.action-buttons {
   display: flex;
-  gap: 8px;
+  gap: 14px;
+  margin-top: 20px;
 }
 
-.note-icon {
-  margin-top: 2px;
-}
-
-.flower-actions {
-  display: flex;
-  gap: 12px;
-  padding-top: 16px;
-  margin-top: 8px;
-}
-
-.action-button {
-  padding: 10px 16px;
-  border-radius: 25px;
-  border: none;
-  cursor: pointer;
-  font-weight: 500;
+.edit-btn, .delete-btn {
   flex: 1;
-  text-align: center;
-  color: #000000;
+  padding: 14px;
+  border: none;
+  border-radius: 25px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background-color: var(--chamoisee-light);
+  color: #000;
+}
+
+.delete-btn {
   background-color: var(--chamoisee);
-  transition: all 0.2s ease;
-  font-family: 'Roboto', sans-serif;
+  color: #000;
 }
 
-.action-button:hover {
+.edit-btn:hover, .delete-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+/* Responsive Design */
 @media (max-width: 480px) {
   .flower-card {
     padding: 16px;
   }
-  
-  .property-prefix {
-    padding: 0 8px;
-  }
-  
+
+  .property-prefix,
   .property-content {
-    padding: 0 8px;
+    padding: 0 12px;
   }
-  
-  .action-button {
-    padding: 8px 12px;
+
+  .property-prefix span {
+    margin-left: 2px;
   }
 }
