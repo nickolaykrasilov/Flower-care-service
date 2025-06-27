@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { FaPlus, FaEdit } from 'react-icons/fa';
 import '../styles/FlowerForm.css';
 
 const FlowerForm = ({ onSubmit, initialData, loading }) => {
@@ -20,23 +19,12 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
         temperature_range: initialData.temperature_range || { min: null, max: null },
         comment: initialData.comment || null
       });
-    } else {
-      setFormData({
-        name: '',
-        watering_intensity: null,
-        light_level: null,
-        temperature_range: { min: null, max: null },
-        comment: null
-      });
     }
   }, [initialData]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value || null // Сохраняем null для пустых значений
-    }));
+    setFormData(prev => ({ ...prev, [name]: value || null }));
   };
 
   const handleTempChange = (e) => {
@@ -52,31 +40,15 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
-    // Подготовка данных в формате API
-    const apiData = {
+    onSubmit({
       name: formData.name,
       watering_intensity: formData.watering_intensity,
       light_level: formData.light_level,
       temperature_range: formData.temperature_range,
       comment: formData.comment
-    };
-    
-    onSubmit(apiData);
-    
-    // Сброс формы только при создании нового цветка
-    if (!initialData && !loading) {
-      setFormData({
-        name: '',
-        watering_intensity: null,
-        light_level: null,
-        temperature_range: { min: null, max: null },
-        comment: null
-      });
-    }
+    });
   };
 
-  // Варианты для селектов
   const wateringOptions = [
     { value: null, label: 'Not specified' },
     { value: 'Light', label: 'Light' },
@@ -94,67 +66,73 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
 
   return (
     <form onSubmit={handleSubmit} className="flower-form">
-      <h2 className="form-title">
-        {initialData ? (
-          <>
-            <FaEdit /> Edit
-          </>
-        ) : (
-          <>
-            <FaPlus /> Add
-          </>
-        )}
-      </h2>
-
-      <div className="form-group">
-        <label>Name</label>
-        <input
-          type="text"
-          name="name"
-          value={formData.name}
-          onChange={handleChange}
-          placeholder="For example: Ficus Benjamin"
-          required
-          disabled={loading}
-        />
-      </div>
-
-      <div className="form-row">
-        <div className="form-group">
-          <label>Watering</label>
-          <select 
-            name="watering_intensity" 
-            value={formData.watering_intensity || ''}
-            onChange={handleChange}
-            disabled={loading}
-          >
-            {wateringOptions.map(option => (
-              <option key={option.value || 'empty'} value={option.value || ''}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+      <div className="form-rows">
+        {/* Name Row */}
+        <div className="form-row">
+          <div className="form-prefix name-prefix">
+            <span>🌿 Name:</span>
+          </div>
+          <div className="form-content">
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Ficus Benjamin"
+              required
+              disabled={loading}
+            />
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Ligth level</label>
-          <select 
-            name="light_level" 
-            value={formData.light_level || ''}
-            onChange={handleChange}
-            disabled={loading}
-          >
-            {lightOptions.map(option => (
-              <option key={option.value || 'empty'} value={option.value || ''}>
-                {option.label}
-              </option>
-            ))}
-          </select>
+        {/* Watering Row */}
+        <div className="form-row">
+          <div className="form-prefix watering-prefix">
+            <span>💦 Watering:</span>
+          </div>
+          <div className="form-content">
+            <select
+              name="watering_intensity"
+              value={formData.watering_intensity || ''}
+              onChange={handleChange}
+              disabled={loading}
+            >
+              {wateringOptions.map(option => (
+                <option key={option.value || 'empty'} value={option.value || ''}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label>Temp</label>
-          <div className="temp-inputs">
+        {/* Light Level Row */}
+        <div className="form-row">
+          <div className="form-prefix light-level-prefix">
+            <span>☀️ Light level:</span>
+          </div>
+          <div className="form-content">
+            <select
+              name="light_level"
+              value={formData.light_level || ''}
+              onChange={handleChange}
+              disabled={loading}
+            >
+              {lightOptions.map(option => (
+                <option key={option.value || 'empty'} value={option.value || ''}>
+                  {option.label}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Temperature Row */}
+        <div className="form-row">
+          <div className="form-prefix temperature-prefix">
+            <span>🌡 Temp:</span>
+          </div>
+          <div className="form-content temp-inputs">
             <input
               type="number"
               name="min"
@@ -174,31 +152,31 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
             />
           </div>
         </div>
+
+        {/* Note Row */}
+        <div className="form-row">
+          <div className="form-prefix note-prefix">
+            <span>✏️ Note:</span>
+          </div>
+          <div className="form-content">
+            <textarea
+              name="comment"
+              value={formData.comment || ''}
+              onChange={handleChange}
+              placeholder="Care features..."
+              rows="3"
+              disabled={loading}
+            />
+          </div>
+        </div>
       </div>
 
-      <div className="form-group">
-        <label>Note</label>
-        <textarea
-          name="comment"
-          value={formData.comment || ''}
-          onChange={handleChange}
-          placeholder="Features of care, preferences..."
-          rows="3"
-          disabled={loading}
-        />
+      {/* Action Buttons */}
+      <div className="form-actions">
+        <button type="submit" className="submit-btn" disabled={loading}>
+          {loading ? 'Saving...' : (initialData ? 'Update' : 'Add')}
+        </button>
       </div>
-
-      <button 
-        type="submit" 
-        className="submit-btn"
-        disabled={loading}
-      >
-        {loading ? (
-          <span>Conservation...</span>
-        ) : (
-          initialData ? 'Update' : 'Add'
-        )}
-      </button>
     </form>
   );
 };
