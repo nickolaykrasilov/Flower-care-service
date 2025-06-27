@@ -1,4 +1,4 @@
-import { FaEdit, FaTrash, FaTint, FaSun, FaThermometerHalf, FaComment } from 'react-icons/fa';
+import { FaTint, FaSun, FaThermometerHalf, FaComment } from 'react-icons/fa';
 import '../styles/FlowerCard.css';
 
 const FlowerCard = ({ flower, onDelete, onEdit }) => {
@@ -18,39 +18,74 @@ const FlowerCard = ({ flower, onDelete, onEdit }) => {
 
   return (
     <div className="flower-card">
-      <div className="flower-card-header">
-        <h3>{flower.name || 'Untitled'}</h3>
-        <div className="flower-actions">
-          <button onClick={() => onEdit(flower)} aria-label="Edit">
-            <FaEdit />
-          </button>
-          <button onClick={() => onDelete(flower.id)} aria-label="Delete">
-            <FaTrash />
-          </button>
+      <div className="flower-properties">
+        {/* Name - зеленая правая часть */}
+        <div className="flower-property">
+          <div className="property-prefix">
+            <span className="property-label">Name:</span>
+          </div>
+          <div className="property-content name-value">
+            {flower.name || 'Untitled'}
+          </div>
+        </div>
+
+        {/* Watering - голубая левая часть */}
+        <div className="flower-property">
+          <div className="property-prefix watering-prefix">
+            <FaTint className="property-icon" />
+            <span className="property-label">Watering:</span>
+          </div>
+          <div className="property-content">
+            {flower.watering_intensity || 'Not specified'}
+          </div>
+        </div>
+
+        {/* Light level - желтая левая часть */}
+        <div className="flower-property">
+          <div className="property-prefix light-level-prefix">
+            <FaSun className="property-icon" />
+            <span className="property-label">Light level:</span>
+          </div>
+          <div className="property-content">
+            {flower.light_level || 'Not specified'}
+          </div>
+        </div>
+
+        {/* Temperature - обычная строка */}
+        <div className="flower-property">
+          <div className="property-prefix">
+            <FaThermometerHalf className="property-icon" />
+            <span className="property-label">Temperature:</span>
+          </div>
+          <div className="property-content">
+            {formatTemperature(flower.temperature_range)}
+          </div>
         </div>
       </div>
 
-      <div className="flower-details">
-        <div className="flower-property">
-          <FaTint className="icon" />
-          <span><strong>Watering:</strong> {flower.watering_intensity || 'Not specified'}</span>
-        </div>
-        <div className="flower-property">
-          <FaSun className="icon" />
-          <span><strong>Light level:</strong> {flower.light_level || 'Not specified'}</span>
-        </div>
-        <div className="flower-property">
-          <FaThermometerHalf className="icon" />
-          <span><strong>Temp</strong> {formatTemperature(flower.temperature_range)}</span>
-        </div>
-      </div>
-
+      {/* Note section */}
       {flower.comment && (
-        <div className="flower-comment">
-          <FaComment className="icon" />
-          <p>{flower.comment}</p>
+        <div className="flower-note">
+          <FaComment className="note-icon" />
+          <p className="note-text">{flower.comment}</p>
         </div>
       )}
+
+      {/* Action buttons */}
+      <div className="flower-actions">
+        <button 
+          className="action-button" 
+          onClick={() => onEdit(flower)}
+        >
+          Edit
+        </button>
+        <button 
+          className="action-button" 
+          onClick={() => onDelete(flower.id)}
+        >
+          Delete
+        </button>
+      </div>
     </div>
   );
 };

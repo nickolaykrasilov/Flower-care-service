@@ -1,31 +1,56 @@
 :root {
-  /*  Основная палитра */
-  --parchment: #f0e2ad;       /* RGB(240, 226, 173) */
-  --tea-green: #dde5b6;       /* RGB(221, 229, 182) */
-  --olivine: #adc178;         /* RGB(173, 193, 120) */
-  --dark-olive-green: #7b9b44;/* RGB(123, 155, 68) */
-  --chamoisee: #a98467;       /* RGB(169, 132, 103) */
-  --umber: #6c584c;           /* RGB(108, 88, 76) */
+  /* Основные цвета темы */
+  --surface: #f0e2ad;       /* Parchment */
+  --background: #dde5b6;    /* TeaGreen */
+  --primary: #adc178;       /* Olivine */
+  --on-primary: #ffffff;    /* Белый текст на primary */
+  --secondary: #7b9b44;     /* DarkOliveGreen */
+  --on-secondary: #ffffff;  /* Белый текст на secondary */
+  --tertiary: #f8f4e8;      /* Светлый фон для полей (аналог surfaceContainer) */
+  --on-tertiary: #5a5246;   /* Темный текст на tertiary */
+  --accent: #a98467;        /* Chamoisee */
+  --on-accent: #ffffff;     /* Белый текст на акцентных элементах */
+  --error: #ba1a1a;         /* Красный для ошибок */
+  --on-error: #ffffff;      /* Белый текст на error */
 
-  /*  Текст и фон */
-  --white: #ffffff;           /* RGB(255, 255, 255) */
-  --dark-grey: #363737;       /* RGB(54, 55, 55) */
-  --light-grey: #848787;      /* RGB(132, 135, 135) */
+  /* Специальные цвета для свойств */
+  --watering: #8BD3E6;      /* Waterign - голубой */
+  --on-watering: #003366;   /* Темно-синий текст на голубом */
+  --light-level: #FFEB82;   /* LightLevel - желтый */
+  --on-light-level: #5C4D00;/* Темно-желтый текст на светлом желтом */
 
-  /*  Ошибки и состояния */
-  --error: #fa4f4f;           /* RGB(250, 79, 79) */
-  --error-light: #ffebee;     /* Для фона ошибок */
+  /* Дополнительные оттенки */
+  --primary-light: #c0d28a; /* Светлый вариант primary */
+  --primary-dark: #8a9d5c;  /* Темный вариант primary */
+  --accent-light: #c0a58c;  /* Светлый вариант accent */
+  --accent-dark: #8f6b4a;   /* Темный вариант accent */
+  --chamoisee: #a98467;     /* Основной коричневый */
+  --chamoisee-light: #b5947d; /* Светлый коричневый */
+  --chamoisee-dark: #8f6b4a;  /* Темный коричневый */
 
-  /*  Дополнительные оттенки */
-  --olivine-light: #c0d28a;   /* RGB(192, 210, 138) */
-  --chamoisee-light: #b5947d; /* RGB(181, 148, 125) */
+  /* Текст */
+  --on-surface: #1a1c18;    /* Основной цвет текста */
+  --on-background: #1a1c18;  /* Цвет текста на фоне */
 
-  /*  Прозрачности */
-  --chamoisee-50: rgba(169, 132, 103, 0.5);
-  --umber-20: rgba(108, 88, 76, 0.2);
+  /* Состояния */
+  --hover-opacity: 0.08;     /* Прозрачность при наведении */
+  --focus-opacity: 0.12;     /* Прозрачность при фокусе */
+  --pressed-opacity: 0.12;   /* Прозрачность при нажатии */
 
-  /*  Контрастные цвета текста */
-  --on-parchment: var(--dark-grey);
-  --on-olivine: var(--white);
-  --on-error: var(--white);
+  /* Тени */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+
+  /* Границы */
+  --border-sm: 1px solid rgba(0, 0, 0, 0.1);
+  --border-md: 1px solid rgba(0, 0, 0, 0.2);
+  --border-lg: 1px solid rgba(0, 0, 0, 0.3);
+
+  /* Радиусы скругления */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 25px;        /* Для элементов с RoundedCornerShape(25.dp) */
+  --radius-full: 9999px;    /* Полное скругление */
 }

@@ -158,7 +158,7 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
             <input
               type="number"
               name="min"
-              placeholder="Мин"
+              placeholder="Min"
               value={formData.temperature_range.min || ''}
               onChange={handleTempChange}
               disabled={loading}
@@ -167,7 +167,7 @@ const FlowerForm = ({ onSubmit, initialData, loading }) => {
             <input
               type="number"
               name="max"
-              placeholder="Макс"
+              placeholder="Max"
               value={formData.temperature_range.max || ''}
               onChange={handleTempChange}
               disabled={loading}

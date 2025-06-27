@@ -1,136 +1,127 @@
 @import './colors.css';
 
-/* Основные стили карточки */
 .flower-card {
-  background-color: #F5F5DC !important; /* Принудительно применяем цвет */
-  border: 1px solid var(--olivine);
+  background-color: var(--background);
+  border: 1px solid var(--primary);
   border-radius: 12px;
-  padding: 16px;
-  color: var(--umber);
-  height: 100%;
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  transition: all 0.3s ease;
-  position: relative;
+  padding: 20px;
+  color: var(--on-surface);
   box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-}
-
-/* Убедимся, что дочерние элементы не переопределяют фон */
-.flower-card * {
-  background-color: transparent !important;
-}
-
-/* Ховер-эффект */
-.flower-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 6px 16px rgba(0,0,0,0.1);
-  border-color: var(--olivine-dark);
-}
-
-/* Шапка карточки */
-.flower-card-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-  padding-bottom: 12px;
-  border-bottom: 1px solid rgba(173, 193, 120, 0.4);
-}
-
-/* Заголовок */
-.flower-card-title {
-  margin: 0;
-  color: var(--chamoisee-dark);
-  font-size: 1.25rem;
-  font-weight: 600;
-}
-
-/* Кнопки действий */
-.flower-card-actions {
-  display: flex;
-  gap: 10px;
-}
-
-.flower-card-button {
-  background: rgba(255,255,255,0.8) !important;
-  border: none;
-  cursor: pointer;
-  padding: 8px;
-  border-radius: 50%;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34px;
-  height: 34px;
-}
-
-/* Стили для кнопок */
-.edit-button { color: var(--olivine-dark); }
-.delete-button { color: var(--chamoisee-dark); }
-
-.edit-button:hover {
-  background: var(--olivine) !important;
-  color: white !important;
-}
-
-.delete-button:hover {
-  background: var(--chamoisee) !important;
-  color: white !important;
-}
-
-/* Свойства растения */
-.flower-properties {
   display: flex;
   flex-direction: column;
   gap: 12px;
-  margin-bottom: 16px;
+  max-width: 500px;
+  font-family: 'Roboto', sans-serif; /* Улучшенный шрифт */
+}
+
+.flower-properties {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 .flower-property {
   display: flex;
+  min-height: 40px;
+  border-radius: 25px;
+  overflow: hidden;
+}
+
+.property-prefix {
+  display: flex;
   align-items: center;
-  gap: 12px;
+  padding: 0 12px;
+  font-weight: 600;
+}
+
+.property-content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  background-color: var(--tertiary);
+  color: var(--on-tertiary);
   font-size: 0.95rem;
-  padding: 10px 12px;
-  border-radius: 8px;
-  background: rgba(255,255,255,0.6) !important;
+  line-height: 1.5;
 }
 
-/* Иконки свойств */
+/* Специальные стили префиксов */
+.watering-prefix {
+  background-color: var(--watering);
+  color: var(--on-watering);
+}
+
+.light-level-prefix {
+  background-color: var(--light-level);
+  color: var(--on-light-level);
+}
+
+.name-value {
+  color: var(--primary);
+  font-weight: 600;
+}
+
 .property-icon {
-  color: var(--chamoisee);
-  font-size: 1.1rem;
-  min-width: 24px;
-  text-align: center;
+  margin-right: 8px;
+  font-size: 1rem;
 }
 
-/* Комментарий */
-.flower-comment {
-  margin-top: auto;
-  padding-top: 14px;
-  border-top: 1px dashed rgba(173, 193, 120, 0.4);
+.flower-note {
+  background-color: var(--tertiary);
+  border-radius: 25px;
+  padding: 12px;
+  margin-top: 8px;
+  color: var(--on-tertiary);
+  font-style: italic;
+  min-height: 60px;
+  display: flex;
+  gap: 8px;
+}
+
+.note-icon {
+  margin-top: 2px;
+}
+
+.flower-actions {
   display: flex;
   gap: 12px;
-  font-size: 0.9rem;
-  background: rgba(255,255,255,0.4) !important;
-  padding: 12px;
-  border-radius: 8px;
+  padding-top: 16px;
+  margin-top: 8px;
 }
 
-/* Адаптивность */
-@media (max-width: 768px) {
-  .flower-card {
-    padding: 14px;
-  }
-  .flower-card-title {
-    font-size: 1.15rem;
-  }
+.action-button {
+  padding: 10px 16px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  flex: 1;
+  text-align: center;
+  color: #000000;
+  background-color: var(--chamoisee);
+  transition: all 0.2s ease;
+  font-family: 'Roboto', sans-serif;
+}
+
+.action-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 @media (max-width: 480px) {
   .flower-card {
-    padding: 12px;
+    padding: 16px;
+  }
+  
+  .property-prefix {
+    padding: 0 8px;
+  }
+  
+  .property-content {
+    padding: 0 8px;
+  }
+  
+  .action-button {
+    padding: 8px 12px;
   }
 }
