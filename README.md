@@ -11,17 +11,14 @@
 
 ## 🔧 Используемые технологии и версии
 
-- React (JavaScript) — ^19.1.0
-- React DOM — ^19.1.0
-- React Scripts — 5.0.1
-- Axios — ^1.10.0
-- React Router DOM — (версия не указана в package.json)
-- React Icons — ^5.5.0
-- Web Vitals — ^2.1.4
-- @testing-library/* — различные версии (см. package.json)
-- Node.js (для сборки) — 18.x (используется в Dockerfile)
-- Nginx (для продакшн-сервинга) — alpine-версия (используется в Dockerfile)
-- Docker Compose — версия файла: 3.8
+- **React (JavaScript)** — ^19.1.0  
+- **React DOM** — ^19.1.0  
+- **React Scripts** — 5.0.1  
+- **Axios** — ^1.10.0  
+- **React Router DOM** — (версия не указана в package.json)  
+- **React Icons** — ^5.5.0  
+- **Web Vitals** — ^2.1.4  
+- **@testing-library/\*** — различные версии (см. `package.json`)
 
 ---
 
